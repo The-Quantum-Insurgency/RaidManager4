@@ -1,0 +1,16 @@
+{
+  "name": "raidmanager",
+  "version": "4.0.0",
+  "description": "The fourth iteration of the Raid Manager Discord bot and Web API.",
+  "main": "RaidManager.js",
+  "repository": "https://github.com/imskyyc/RaidManager4",
+  "author": "imskyyc",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "express": "^4.17.3",
+    "knex": "^1.0.5",
+    "toml": "^3.0.0"
+  }
+}
