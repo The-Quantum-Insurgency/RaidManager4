@@ -1,0 +1,50 @@
+#!/usr/bin/node
+
+/**
+ * @name raidmanager
+ * @description RaidManager CLI entry point
+ * @package raidmanager
+ * @author imskyyc
+ */
+
+// RaidManager CLI (Similar to Laravel Artisan)
+
+// Imports
+const FileSystem = require("fs");
+
+// Preflight checks
+let config = undefined;
+try {
+  config = FileSystem.readdirSync(".config");
+} catch (err) {
+  process.stderr.write(
+    "Error: .config directory not found. Did you copy the .config.example directory to .config?"
+  );
+  process.exit(1);
+}
+
+// Start CLI
+let args = process.argv.slice(2);
+
+if (args.length == 0) {
+  const defaultCommands = require("./.tools/default");
+  defaultCommands.execute(["help"]);
+  process.exit(0);
+} else {
+  const commandArg = args[0];
+
+  if (commandArg.includes(":")) {
+    const commandSplit = commandArg.split(":");
+    args = [commandSplit[0], commandSplit[1], ...args];
+  }
+
+  let command = undefined;
+
+  try {
+    command = commandModule = require(args[0]);
+  } catch (err) {
+    command = require("./.tools/default");
+  }
+
+  command.execute(args);
+}

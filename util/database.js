@@ -6,8 +6,6 @@
  * @param { RaidManager }
  */
 
-const Knex = require('knex')
-
 const Database = class Database {
   constructor(RaidManager) {
     this.RaidManager = RaidManager;
@@ -16,15 +14,7 @@ const Database = class Database {
 
   up = async function () {
     const Configuration = this.Configuration;
-    const Connection = Knex({
-      client: Configuration.type,
-      connection: {
-        host: Configuration.host,
-        user: Configuration.user,
-        password: Configuration.pass,
-        database: Configuration.database
-      }
-    })
+    
   };
 };
 

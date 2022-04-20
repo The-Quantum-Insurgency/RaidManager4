@@ -8,9 +8,10 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "bluebird": "^3.7.2",
     "discord.js": "^13.6.0",
     "express": "^4.17.3",
-    "knex": "^1.0.5",
+    "mysql2": "^2.3.3",
     "prettier": "^2.6.2",
     "toml": "^3.0.0"
   }
