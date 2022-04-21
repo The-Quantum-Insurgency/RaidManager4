@@ -37,8 +37,8 @@ const RaidManager = {
   // RaidManager start function
   up: async (Debug) => {
     // Set debug
-    RaidManager.DEBUG = Debug
-    
+    RaidManager.DEBUG = Debug;
+
     // Create lockfile
     const PID = process.pid;
     FileSystem.writeFileSync("./raidmanager.lock", PID.toString());
@@ -80,7 +80,9 @@ const RaidManager = {
 
   down: async (err) => {
     if (err) {
-      console.error(`Error: RaidManager is exiting with one or more errors. \n${err}\n`);
+      console.error(
+        `Error: RaidManager is exiting with one or more errors. \n${err}\n`
+      );
     }
 
     if (RaidManager.Bot) {

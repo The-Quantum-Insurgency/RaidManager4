@@ -9,21 +9,16 @@
 const Database = class Database {
   constructor(RaidManager) {
     this.RaidManager = RaidManager;
-    this.Configuration = RaidManager.Environment.database
+    this.Configuration = RaidManager.Environment.database;
   }
 
   up = async function () {
     const Configuration = this.Configuration;
-    
   };
 
-  reload = async function () {
+  reload = async function () {};
 
-  };
-
-  down = async function () {
-
-  }
+  down = async function () {};
 };
 
 module.exports = Database;

@@ -58,9 +58,7 @@ module.exports = class Bot {
         }
 
         if (!Command) {
-          console.error(
-            `Error: command ${CommandFile} is null / undefined.`
-          );
+          console.error(`Error: command ${CommandFile} is null / undefined.`);
           continue;
         }
 

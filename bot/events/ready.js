@@ -6,6 +6,4 @@
  * @param { Bot } Bot
  */
 
-module.exports = async function (Bot) {
-  
-};
+module.exports = async function (Bot) {};
