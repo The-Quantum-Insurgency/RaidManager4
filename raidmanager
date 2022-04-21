@@ -18,7 +18,7 @@ try {
   config = FileSystem.readdirSync(`${__dirname}/.config`);
 } catch (err) {
   console.error(
-    "Error: .config directory not found. Did you copy the .config.example directory to .config?\n"
+    "Error: .config directory not found. Did you copy the .config.example directory to .config?"
   );
   process.exit(1);
 }
@@ -41,7 +41,7 @@ if (args.length == 0) {
   let command = undefined;
 
   try {
-    command = commandModule = require(`${__dirname}/${args[0]}`);
+    command = commandModule = require(`${__dirname}/.tools/${args[0]}`);
   } catch (err) {
     command = require(`${__dirname}/.tools/default`);
   }
