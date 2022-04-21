@@ -1,6 +1,6 @@
 /**
  * @package RaidManager4
- * @name Database Interface
+ * @name database.js
  * @description A global database class for the application.
  * @author imskyyc
  * @param { RaidManager }
@@ -16,6 +16,14 @@ const Database = class Database {
     const Configuration = this.Configuration;
     
   };
+
+  reload = async function () {
+
+  };
+
+  down = async function () {
+
+  }
 };
 
 module.exports = Database;

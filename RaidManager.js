@@ -52,7 +52,7 @@ const RaidManager = {
     });
 
     // Initialize database
-    RaidManager.database.up();
+    await RaidManager.database.up();
 
     if (Environment.app.BOT_ENABLED) {
       const Configuration = await TOML.parse(

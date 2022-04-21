@@ -9,12 +9,10 @@
 
 // RaidManager CLI command fallback
 // You can run this manually but it's better to go through the RaidManager CLI.
-const { dirname } = require("path");
 exports.execute = async function (args) {
   const stdout = process.stdout;
   const stderr = process.stderr;
-  const appDir = dirname(require.main.filename);
-  const package = require(`${appDir}/package.json`);
+  const package = require(`${__dirname}/package.json`);
 
   switch (args[0]) {
     case "help":
@@ -23,7 +21,7 @@ exports.execute = async function (args) {
       );
       break;
     case "start":
-      const raidManager = require(`${appDir}/RaidManager`);
+      const raidManager = require(`${__dirname}/RaidManager`);
       const lockFile = await raidManager.getLockFile();
 
       if (lockFile) {

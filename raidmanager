@@ -15,7 +15,7 @@ const FileSystem = require("fs");
 // Preflight checks
 let config = undefined;
 try {
-  config = FileSystem.readdirSync(".config");
+  config = FileSystem.readdirSync(`${__dirname}/.config`);
 } catch (err) {
   process.stderr.write(
     "Error: .config directory not found. Did you copy the .config.example directory to .config?"
@@ -27,7 +27,7 @@ try {
 let args = process.argv.slice(2);
 
 if (args.length == 0) {
-  const defaultCommands = require("./.tools/default");
+  const defaultCommands = require(`${__dirname}/.tools/default`);
   defaultCommands.execute(["help"]);
   process.exit(0);
 } else {
@@ -41,9 +41,9 @@ if (args.length == 0) {
   let command = undefined;
 
   try {
-    command = commandModule = require(args[0]);
+    command = commandModule = require(`${__dirname}/${args[0]}`);
   } catch (err) {
-    command = require("./.tools/default");
+    command = require(`${__dirname}/.tools/default`);
   }
 
   command.execute(args);
