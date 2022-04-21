@@ -13,6 +13,7 @@ const Environment = TOML.parse(FileSystem.readFileSync(".config/app.toml"));
 const RaidManager = {
   APP_NAME: Environment.app.APP_NAME,
   VERSION: Environment.app.APP_VERSION,
+  DEBUG: false,
 
   Environment: Environment,
 
@@ -34,7 +35,10 @@ const RaidManager = {
   },
 
   // RaidManager start function
-  up: async () => {
+  up: async (Debug) => {
+    // Set debug
+    RaidManager.DEBUG = Debug
+    
     // Create lockfile
     const PID = process.pid;
     FileSystem.writeFileSync("./raidmanager.lock", PID.toString());
