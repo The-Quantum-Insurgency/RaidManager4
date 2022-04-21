@@ -1,11 +1,11 @@
 # RaidManager4 Discord bot configuration
 
 [bot]
-token = "OTMzODQ3Njc2MzkzNDk2NjU2.YenfbA.5A5vqCIBRY-269tEVSzmhAbzr5Q"
+token = ""
 
 [commands]
 enable_slash_commands = true
-slash_command_guilds = [966180940827226163]
+slash_command_guilds = []
 enable_message_commands = true
 message_command_prefix = ";"
 

@@ -17,8 +17,8 @@ let config = undefined;
 try {
   config = FileSystem.readdirSync(`${__dirname}/.config`);
 } catch (err) {
-  process.stderr.write(
-    "Error: .config directory not found. Did you copy the .config.example directory to .config?"
+  console.error(
+    "Error: .config directory not found. Did you copy the .config.example directory to .config?\n"
   );
   process.exit(1);
 }

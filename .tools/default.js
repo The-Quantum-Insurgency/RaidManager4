@@ -11,14 +11,12 @@
 // You can run this manually but it's better to go through the RaidManager CLI.
 const { dirname } = require("path");
 exports.execute = async function (args) {
-  const stdout = process.stdout;
-  const stderr = process.stderr;
   const appDir = dirname(require.main.filename)
   const package = require(`${appDir}/package.json`);
 
   switch (args[0]) {
     case "help":
-      stdout.write(
+      console.log(
         [`raidmanager4 @ ${package.version} | Help Dialogue:`].join("\n")
       );
       break;
@@ -28,7 +26,7 @@ exports.execute = async function (args) {
       const debugEnabled = args.includes("--debug")
 
       if (lockFile) {
-        stderr.write(
+        console.error(
           `Error: RaidManager is already running. (PID ${lockFile})`
         );
 
@@ -39,7 +37,7 @@ exports.execute = async function (args) {
 
       break;
     default:
-      stderr.write("Error: Invalid command.");
+      console.error("Error: Invalid command.");
       process.exit(1);
   }
 };

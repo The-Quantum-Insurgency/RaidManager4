@@ -45,6 +45,7 @@ const RaidManager = {
 
     process.on("exit", RaidManager.down);
     process.on("SIGINT", RaidManager.down);
+    process.on("uncaughtException", RaidManager.down);
 
     // Load utility functions
     const Utilities = FileSystem.readdirSync("util");
@@ -77,7 +78,11 @@ const RaidManager = {
 
   reload: async () => {},
 
-  down: async () => {
+  down: async (err) => {
+    if (err) {
+      console.error(`Error: RaidManager is exiting with one or more errors. \n${err}\n`);
+    }
+
     if (RaidManager.Bot) {
       await RaidManager.Bot.down();
     }
@@ -85,7 +90,7 @@ const RaidManager = {
     try {
       FileSystem.unlinkSync("./raidmanager.lock");
     } catch (err) {
-      process.stderr.write("ERROR: FAILED TO DELETE LOCKFILE.");
+      console.error("ERROR: FAILED TO DELETE LOCKFILE.");
       process.exit(1);
     }
 

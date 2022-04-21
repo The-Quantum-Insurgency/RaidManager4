@@ -51,14 +51,14 @@ module.exports = class Bot {
         try {
           Command = require(`./commands/${Category}/${CommandFile}`);
         } catch (err) {
-          process.stderr.write(
+          console.error(
             `Error: command ${CommandFile} failed to load. \n${err}`
           );
           continue;
         }
 
         if (!Command) {
-          process.stderr.write(
+          console.error(
             `Error: command ${CommandFile} is null / undefined.`
           );
           continue;
@@ -125,11 +125,11 @@ module.exports = class Bot {
           { body: Commands }
         );
 
-        process.stdout.write(
+        console.log(
           `Slash commands for guild ${GuildId} successfully registered with Discord API (v10)`
         );
       } catch (err) {
-        process.stderr.write(
+        console.error(
           `Slash commands were unable to be pushed to guild ${GuildId}. Error: \n${err}`
         );
       }
