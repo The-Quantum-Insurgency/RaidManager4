@@ -67,6 +67,8 @@ module.exports = class Bot {
 
       CategoryCollection.set(Category, CommandCollection);
     }
+
+    this.Commands = CategoryCollection;
   };
 
   HookEvents = async function () {
@@ -128,8 +130,10 @@ module.exports = class Bot {
         );
       } catch (err) {
         console.error(
-          `Slash commands were unable to be pushed to guild ${GuildId}. Error: \n${err}`
+          `Slash commands were unable to be pushed to guild ${GuildId}. Error:`
         );
+
+        console.error(err);
       }
     }
   };
@@ -158,16 +162,14 @@ module.exports = class Bot {
     ];
 
     const Client = new BotClient({ intents: Intents });
-    await Client.login(Configuration.bot.token);
 
     this.Client = Client;
-
-    const User = Client.user;
-    await User.setActivity("Starting up...");
 
     await this.LoadUtils();
     await this.LoadCommands();
     await this.HookEvents();
+
+    await Client.login(Configuration.bot.token);
   };
 
   reload = async function () {};

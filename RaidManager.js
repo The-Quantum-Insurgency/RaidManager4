@@ -79,7 +79,7 @@ const RaidManager = {
   reload: async () => {},
 
   down: async (err) => {
-    if (err) {
+    if (err && err != "SIGINT") {
       console.error(
         `Error: RaidManager is exiting with one or more errors. \n${err}\n`
       );

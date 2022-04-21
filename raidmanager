@@ -12,6 +12,9 @@
 // Imports
 const FileSystem = require("fs");
 
+// Copyright notice
+console.log("RaidManager4 Copyright (C) 2022 imskyyc");
+
 // Preflight checks
 let config = undefined;
 try {

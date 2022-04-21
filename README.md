@@ -70,6 +70,13 @@ pass = "password"
 
 Also, if using the discord bot, make sure to update the token and settings in `.config/bot/bot.toml`. The files `guidelines.json` and `status.json` are for configuring TQI's guidelines in the [#guidelines](https://discord.com/channels/857445688932696104/857449102220591114) channel in our discord. `gudelines.json` can safely be removed, but will break commands like `/information` due to them requiring the file to be present.
 
+**Note: if using Slash Commands, Guild Ids must be in QUOTES, example:**
+```toml
+slash_command_guild_ids = ["966180940827226163"]
+```
+
+This is due to a limitation in Node with large numbers. **If you get a missing access error, and the outputted server id (the last number in the request URL) does not match the Guild Id configured, then you did not put quotes around the Guild Id. **Do not report missing access errors, unless you are absolutely sure the request was made with the correct parameters.**
+
 ---
 ## Usage
 To start the bot, run: `node raidmanager start`. Optionally, the `--debug` flag can be added for additional debug outputs.
