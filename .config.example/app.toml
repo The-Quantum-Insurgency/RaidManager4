@@ -1,0 +1,16 @@
+# Raid Manager global configuration
+
+
+[app]
+APP_NAME = "RaidManager4"
+APP_VERSION = "4.0.0"
+BOT_ENABLED = true
+API_ENABLED = true
+
+[database]
+enabled = true
+type = "mysql"
+host = "127.0.0.1"
+base = "tqi"
+user = "RaidManager4"
+pass = "password"

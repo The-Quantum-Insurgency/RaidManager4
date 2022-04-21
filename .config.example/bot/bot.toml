@@ -1,0 +1,14 @@
+# RaidManager4 Discord bot configuration
+
+[bot]
+token = "OTMzODQ3Njc2MzkzNDk2NjU2.YenfbA.5A5vqCIBRY-269tEVSzmhAbzr5Q"
+
+[commands]
+enable_slash_commands = true
+slash_command_guilds = [966180940827226163]
+enable_message_commands = true
+message_command_prefix = ";"
+
+[files]
+status_message_file = "status.json"
+guidelines_file = "guidelines.json"

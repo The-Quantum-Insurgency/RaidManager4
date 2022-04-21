@@ -1,0 +1,77 @@
+{
+    "interval": 60,
+    "messages": [
+        {
+            "status": "idle",
+            "activities": [
+                {
+                    "name": "the time until the next raid. | RaidManager %BOT_VERSION%",
+                    "type": "WATCHING"
+                }
+            ]
+        },
+        {
+            "status": "dnd",
+            "activities": [
+                {
+                    "name": "the DMR \"spontaneously\" combust. | RaidManager %BOT_VERSION%",
+                    "type": "WATCHING"
+                }
+            ]
+        },
+        {
+            "status": "online",
+            "activities": [
+                {
+                    "name": "the raid schedule. | RaidManager %BOT_VERSION%",
+                    "type": "WATCHING"
+                }
+            ]
+        },
+        {
+            "status": "dnd",
+            "activities": [
+                {
+                    "name": "with the warhead. | RaidManager %BOT_VERSION%",
+                    "type": "PLAYING"
+                }
+            ]
+        },
+        {
+            "status": "online",
+            "activities": [
+                {
+                    "name": "with the QSO Officers. | RaidManager %BOT_VERSION%",
+                    "type": "PLAYING"
+                }
+            ]
+        },
+        {
+            "status": "idle",
+            "activities": [
+                {
+                    "name": "with some guns. | RaidManager %BOT_VERSION%",
+                    "type": "PLAYING"
+                }
+            ]
+        },
+        {
+            "status": "online",
+            "activities": [
+                {
+                    "name": "QSERF | RaidManager %BOT_VERSION%",
+                    "type": "PLAYING"
+                }
+            ]
+        },
+        {
+            "status": "dnd",
+            "activities": [
+                {
+                    "name": "the screams of the innocent. | RaidManager %BOT_VERSION%",
+                    "type": "LISTENING"
+                }
+            ]
+        }
+    ]
+}
