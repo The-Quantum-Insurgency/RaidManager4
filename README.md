@@ -1,5 +1,5 @@
 ## <strong>RaidManager4</strong>
-
+<br />
 <div align="center">
     <a href="https://github.com/imskyyc/RaidManager4/blob/master/LICENSE">
         <img src="https://img.shields.io/github/license/imskyyc/RaidManager4"/>
@@ -12,7 +12,7 @@
     </a>
 </div>
 
----
+<br />
 
 **NOTE: THIS IS A MOSTLY PROPRIETARY SOLUTION CODED UNIQUELY TO FIT TQI'S NEEDS. THIS IS NOT THE "BE ALL AND END ALL" FOR MOST CASES! The bot is open to modify however you want, but it is preferred if the source is credited, so other people can find this repository.**
 
