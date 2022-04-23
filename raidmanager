@@ -11,6 +11,19 @@
 
 // Imports
 const FileSystem = require("fs");
+const { execSync } = require("child_process");
+const { question } = require("readline-sync");
+
+// Variables
+const debugEnabled = process.argv.includes("--debug");
+
+// Functions
+const debug = console.debug;
+console.debug = function (str) {
+  if (debugEnabled) {
+    debug(`DEBUG: ${str}`);
+  }
+};
 
 // Copyright notice
 console.log("RaidManager4 Copyright (C) 2022 imskyyc");
@@ -24,6 +37,37 @@ try {
     "Error: .config directory not found. Did you copy the .config.example directory to .config?"
   );
   process.exit(1);
+}
+
+// Update check
+console.log("Checking for updates...");
+
+console.debug("Running git remote update");
+execSync("git remote update");
+
+console.debug("Running git status -uno");
+const gitResponse = execSync("git status -uno").toString().split("\n")[1];
+const gitBranch = execSync("git branch").toString();
+
+if (!gitResponse.includes("Your branch is up to date with")) {
+  // Branch could be outdated
+  const doUpdate = question(
+    `Warning: your local repository is out of date with ${gitBranch}. Would you like to update now? (Y/n): `
+  ).toLowerCase();
+
+  if (doUpdate == "y" || doUpdate == "") {
+    console.log("Updating repository. Please wait.")
+    console.debug("Running git pull");
+
+    execSync("git pull").toString();
+
+    console.log("Update complete. Please run the Raid Manager again.")
+
+    process.exit(0);
+  }
+
+} else {
+  console.log(`Local repository is up to date with branch ${gitBranch}`);
 }
 
 // Start CLI

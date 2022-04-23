@@ -16,6 +16,7 @@
     "mysql2": "^2.3.3",
     "noblox.js": "^4.13.1",
     "prettier": "^2.6.2",
+    "readline-sync": "^1.4.10",
     "toml": "^3.0.0",
     "uuid": "^8.3.2"
   }
