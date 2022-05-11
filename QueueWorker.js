@@ -1,7 +1,7 @@
 /**
  * @name QueueWorker.js
  * @description RaidManager3 Scheduling Queue worker
- * @package RaidManager4
+ * @package raidmanager
  * @author imskyyc
  */
 

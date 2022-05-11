@@ -1,7 +1,7 @@
 /**
  * @name Bot
  * @description RaidManager discord bot entry point
- * @package RaidManager4
+ * @package raidmanager
  * @author imskyyc
  */
 

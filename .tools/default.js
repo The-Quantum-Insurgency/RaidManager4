@@ -12,6 +12,8 @@
 const { dirname } = require("path");
 exports.execute = async function (args) {
   const appDir = dirname(require.main.filename);
+  const raidManager = require(`${appDir}/RaidManager`);
+  const lockFile = await raidManager.getLockFile();
   const package = require(`${appDir}/package.json`);
 
   switch (args[0]) {
@@ -21,8 +23,6 @@ exports.execute = async function (args) {
       );
       break;
     case "start":
-      const raidManager = require(`${appDir}/RaidManager`);
-      const lockFile = await raidManager.getLockFile();
       const debugEnabled = args.includes("--debug");
 
       if (lockFile) {
@@ -34,6 +34,18 @@ exports.execute = async function (args) {
       }
 
       await raidManager.up(debugEnabled);
+
+      break;
+    case "stop":
+      const isForceful = args.includes("--force");
+
+      if (!lockFile && !isForceful) {
+        console.error(
+          `Error: raidmanager.lock not found. To initiate a force stop, run "raidmanager stop --force".`
+        );
+      }
+
+      process.kill(lockFile, "SIGINT");
 
       break;
     default:

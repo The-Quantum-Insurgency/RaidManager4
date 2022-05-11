@@ -24,19 +24,19 @@ module.exports = async function (Bot) {
     const Message = await Channel.messages.fetch(ShutdownMessageId);
 
     const Embed = Message.embeds[0];
-    Embed
-      .setColor("GREEN")
-      .setDescription("Reboot complete.");
+    Embed.setColor("GREEN").setDescription("Reboot complete.");
 
     await Message.edit({
-      embeds: [Embed]
-    })
+      embeds: [Embed],
+    });
 
     await FileSystem.unlink("raidmanager.temp");
   } catch (err) {
     if (err.code != "ENOENT") {
       console.error(err);
-      console.error("This is an error relating to the usage of the /reboot command. The `raidmanager.temp` file may not have been deleted. Please ensure the file is removed and try again.");
+      console.error(
+        "This is an error relating to the usage of the /reboot command. The `raidmanager.temp` file may not have been deleted. Please ensure the file is removed and try again."
+      );
     }
   }
 

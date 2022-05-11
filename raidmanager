@@ -16,6 +16,7 @@ const { question } = require("readline-sync");
 
 // Variables
 const debugEnabled = process.argv.includes("--debug");
+const skipUpdate = process.argv.includes("--skip-update");
 
 // Functions
 const debug = console.debug;
@@ -40,33 +41,35 @@ try {
 }
 
 // Update check
-console.log("Checking for updates...");
+if (!skipUpdate) {
+  console.log("Checking for updates...");
 
-console.debug("Running git remote update");
-execSync("git remote update");
+  console.debug("Running git remote update");
+  execSync("git remote update");
 
-console.debug("Running git status -uno");
-const gitResponse = execSync("git status -uno").toString().split("\n")[1];
-const gitBranch = execSync("git branch").toString();
+  console.debug("Running git status -uno");
+  const gitResponse = execSync("git status -uno").toString().split("\n")[1];
+  const gitBranch = execSync("git branch").toString();
 
-if (!gitResponse.includes("Your branch is up to date with")) {
-  // Branch could be outdated
-  const doUpdate = question(
-    `Warning: your local repository is out of date with ${gitBranch}. Would you like to update now? (Y/n): `
-  ).toLowerCase();
+  if (!gitResponse.includes("Your branch is up to date with")) {
+    // Branch could be outdated
+    const doUpdate = question(
+      `Warning: your local repository is out of date with ${gitBranch}. Would you like to update now? (Y/n): `
+    ).toLowerCase();
 
-  if (doUpdate == "y" || doUpdate == "") {
-    console.log("Updating repository. Please wait.")
-    console.debug("Running git pull");
+    if (doUpdate == "y" || doUpdate == "") {
+      console.log("Updating repository. Please wait.");
+      console.debug("Running git pull");
 
-    execSync("git pull").toString();
+      execSync("git pull").toString();
 
-    console.log("Update complete. Please run the Raid Manager again.")
+      console.log("Update complete. Please run the Raid Manager again.");
 
-    process.exit(0);
+      process.exit(0);
+    }
+  } else {
+    console.log(`Local repository is up to date with branch ${gitBranch}`);
   }
-} else {
-  console.log(`Local repository is up to date with branch ${gitBranch}`);
 }
 
 // Start CLI
