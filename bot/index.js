@@ -24,6 +24,8 @@ module.exports = class Bot {
   }
 
   LoadUtils = async function () {
+    console.debug("Loading bot utility functions...");
+
     const Utilities = await readdir("./bot/util");
     await Utilities.forEach((File) => {
       const Name = File.replace(".js", "");
@@ -34,6 +36,8 @@ module.exports = class Bot {
   };
 
   LoadCommands = async function () {
+    console.debug("Loading bot commands...");
+
     const Categories = await readdir("./bot/commands");
     const CategoryCollection = new Collection();
 
@@ -72,6 +76,8 @@ module.exports = class Bot {
   };
 
   HookEvents = async function () {
+    console.debug("Hooking client events...");
+
     const Client = this.Client;
 
     const Events = await readdir("./bot/events");
@@ -109,6 +115,8 @@ module.exports = class Bot {
   };
 
   PushSlashCommands = async function (Commands) {
+    console.debug("Pushing slash commands...");
+
     const Client = this.Client;
     const Configuration = this.Configuration;
     const GuildIds = Configuration.commands.slash_command_guilds;
@@ -140,6 +148,9 @@ module.exports = class Bot {
 
   // Lifecycle hooks
   up = async function () {
+    console.debug("========== BEGIN BOT LOADING OUTPUT =========");
+    console.debug("RaidManager bot load called!");
+
     const Configuration = this.Configuration;
     const Flags = ClientIntents.FLAGS;
     const Intents = [
@@ -161,6 +172,8 @@ module.exports = class Bot {
       Flags.DIRECT_MESSAGE_TYPING,
     ];
 
+    console.debug("Creating client...");
+
     const Client = new BotClient({ intents: Intents });
 
     this.Client = Client;
@@ -170,6 +183,9 @@ module.exports = class Bot {
     await this.HookEvents();
 
     await Client.login(Configuration.bot.token);
+
+    console.log("RaidManager bot successfully started!");
+    console.debug("========== END BOT LOADING OUTPUT ==========");
   };
 
   reload = async function () {};

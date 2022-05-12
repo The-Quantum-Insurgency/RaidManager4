@@ -13,4 +13,12 @@ const { dirname } = require("path");
 exports.execute = async function (args) {
   const appDir = dirname(require.main.filename);
   const package = require(`${appDir}/package.json`);
+
+  switch (args[0]) {
+    case "init":
+      break;
+    default:
+      console.error("Error: Invalid command.");
+      process.exit(1);
+  }
 };

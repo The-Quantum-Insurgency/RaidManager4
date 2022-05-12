@@ -20,7 +20,7 @@ const skipUpdate = process.argv.includes("--skip-update");
 
 // Functions
 const debug = console.debug;
-console.debug = function (str) {
+consoleDebug = function (str) {
   if (debugEnabled) {
     debug(`DEBUG: ${str}`);
   }
@@ -44,10 +44,10 @@ try {
 if (!skipUpdate) {
   console.log("Checking for updates...");
 
-  console.debug("Running git remote update");
+  consoleDebug("Running git remote update");
   execSync("git remote update");
 
-  console.debug("Running git status -uno");
+  consoleDebug("Running git status -uno");
   const gitResponse = execSync("git status -uno").toString().split("\n")[1];
   const gitBranch = execSync("git branch").toString();
 
@@ -59,7 +59,7 @@ if (!skipUpdate) {
 
     if (doUpdate == "y" || doUpdate == "") {
       console.log("Updating repository. Please wait.");
-      console.debug("Running git pull");
+      consoleDebug("Running git pull");
 
       execSync("git pull").toString();
 
@@ -95,5 +95,5 @@ if (args.length == 0) {
     command = require(`${__dirname}/.tools/default`);
   }
 
-  command.execute(args);
+  command.execute(args, debug);
 }
