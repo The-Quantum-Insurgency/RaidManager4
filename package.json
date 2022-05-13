@@ -15,7 +15,7 @@
     "start": "node raidmanager start --",
     "stop": "node raidmanager stop --",
     "forcestop": "node raidmanager stop --force",
-    "kill": "node raidmanager kill"
+    "kill": "node raidmanager stop --kill"
   },
   "dependencies": {
     "@discordjs/rest": "^0.4.1",

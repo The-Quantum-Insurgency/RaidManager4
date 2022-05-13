@@ -38,14 +38,15 @@ exports.execute = async function (args) {
       break;
     case "stop":
       const isForceful = args.includes("--force");
+      const isKill = args.includes("--kill");
 
-      if (!lockFile && !isForceful) {
+      if (!lockFile && !isForceful && !isKill) {
         console.error(
           `Error: raidmanager.lock not found. To initiate a force stop, run "raidmanager stop --force".`
         );
       }
 
-      process.kill(lockFile, "SIGINT");
+      process.kill(lockFile, (isKill && "SIGTERM") || "SIGINT");
 
       break;
     default:
