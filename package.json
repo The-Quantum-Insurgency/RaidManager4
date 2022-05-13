@@ -8,8 +8,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "docker:build": "docker build -t raidmanager4 .",
-    "docker:run": "docker run -d raidmanager4",
+    "docker:build": "node raidmanager docker:build",
+    "docker:run": "node raidmanager docker:run",
+    "docker:stop": "node raidmanager docker:stop",
+    "docker:kill": "node raidmanager docker:kill",
     "start": "node raidmanager start --",
     "stop": "node raidmanager stop --",
     "forcestop": "node raidmanager stop --force",

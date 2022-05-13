@@ -47,9 +47,7 @@ const RaidManager = {
     console.error = Logger.error;
     console.debug = Logger.debug;
 
-    console.log(
-      "RaidManager4 is starting. Please wait..."
-    );
+    console.log("RaidManager4 is starting. Please wait...");
 
     console.debug("Creating lockfile...");
 
