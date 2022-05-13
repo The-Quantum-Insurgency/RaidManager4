@@ -7,6 +7,14 @@
   "author": "imskyyc",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "docker:build": "docker build -t raidmanager4 .",
+    "docker:run": "docker run -d raidmanager4",
+    "start": "node raidmanager start --",
+    "stop": "node raidmanager stop --",
+    "forcestop": "node raidmanager stop --force",
+    "kill": "node raidmanager kill"
+  },
   "dependencies": {
     "@discordjs/rest": "^0.4.1",
     "bluebird": "^3.7.2",
