@@ -1,0 +1,16 @@
+{
+  "name": "Example_Keyset",
+  "key": "CHANGE_THIS_ACCESS_KEY",
+  "scopes": [
+    "*",
+    "GET_USER",
+    "SET_USER_POINTS",
+    "SET_USER_SQUADRON",
+    "SET_USER_VERIFICATION_ID",
+    "SET_USER_DISCORD_ID",
+    "DELETE_USER",
+    "CREATE_EVENT",
+    "UPDATE_EVENT",
+    "DELETE_EVENT",
+  ]
+}

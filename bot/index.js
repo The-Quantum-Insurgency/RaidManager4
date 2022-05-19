@@ -29,9 +29,13 @@ module.exports = class Bot {
     const Utilities = await readdir("./bot/util");
     await Utilities.forEach((File) => {
       const Name = File.replace(".js", "");
-      const Class = require(`./bot/util/${File}`);
+      const Class = require(`./util/${File}`);
 
-      this[Name] = new Class(this);
+      if (typeof Class == "function") {
+        this[Name] = Class;
+      } else {
+        this[Name] = new Class(this);
+      }
     });
   };
 
@@ -144,6 +148,18 @@ module.exports = class Bot {
         console.error(err);
       }
     }
+  };
+
+  GetCommand = async function (CommandName) {
+    const Commands = this.Commands;
+
+    const Categories = Array.from(Commands.keys());
+
+    Categories.forEach(CategoryName => {
+      const Category = Commands.get(CategoryName);
+
+      console.log(Category);
+    });
   };
 
   // Lifecycle hooks

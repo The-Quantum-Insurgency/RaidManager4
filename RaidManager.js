@@ -4,6 +4,9 @@
  * @description RaidManager4 entry file.
  */
 
+// Add baseDir
+require("app-module-path").addPath(__dirname);
+
 const FileSystem = require("fs");
 const TOML = require("toml");
 
@@ -41,10 +44,18 @@ const RaidManager = {
     RaidManager.DEBUG = Debug;
 
     const Logger = new (require("./framework/logger"))(RaidManager);
+    RaidManager.logger = Logger;
 
+    console.oldLog = console.log;
     console.log = Logger.log;
+
+    console.oldWarn = console.warn;
     console.warn = Logger.warn;
+
+    console.oldError = console.error;
     console.error = Logger.error;
+
+    console.oldDebug = console.debug;
     console.debug = Logger.debug;
 
     console.log("RaidManager4 is starting. Please wait...");
@@ -98,6 +109,30 @@ const RaidManager = {
 
       console.debug("Calling bot start...");
       await Bot.up();
+    }
+
+    if (Environment.app.API_ENABLED) {
+      console.debug("API enabled! Loading...");
+
+      console.debug("Parsing api.toml...");
+      const Configuration = await TOML.parse(
+        FileSystem.readFileSync(".config/api/api.toml")
+      );
+
+      console.debug("Defining RaidManager environment...");
+      RaidManager.Environment = {
+        api: Configuration,
+        ...RaidManager.Environment
+      };
+
+      console.debug("Creating new API object...");
+      const APIClass = require("./api");
+      const API = new APIClass(RaidManager);
+
+      RaidManager.API = API;
+
+      console.debug("Calling API start...");
+      await API.up();
     }
 
     console.log(`RaidManager4 @ ${RaidManager.VERSION} successfully loaded.`);

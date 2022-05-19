@@ -1,0 +1,5 @@
+# RaidManager REST API Configuration
+
+[blacklist]
+user_agents = []
+ips = []

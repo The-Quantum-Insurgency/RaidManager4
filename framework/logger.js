@@ -5,6 +5,7 @@
  @package raidmanager
  */
 
+const FileSystem = require("fs");
 const chalk = require("chalk");
 const moment = require("moment");
 const consoleLog = console.log;
@@ -21,43 +22,40 @@ module.exports = class Logger {
 
   async log(str) {
     const Timestamp = moment().format("YYYY-MM-DD HH:mm:ss");
+    const FormattedString = `${chalk.blue("[" + Timestamp + " | ")}${chalk.blue(
+      "INFO"
+    )}${chalk.blue("]:")} ${str}`;
 
-    consoleLog(
-      `${chalk.blue("[" + Timestamp + " | ")}${chalk.blue("INFO")}${chalk.blue(
-        "]:"
-      )} ${str}`
-    );
+    consoleLog(FormattedString);
   }
 
   async warn(str) {
     const Timestamp = moment().format("YYYY-MM-DD HH:mm:ss");
+    const FormattedString = `${chalk.blue(
+      "[" + Timestamp + " | "
+    )}${chalk.yellowBright("WARN")}${chalk.blue("]:")} ${str}`;
 
-    consoleWarn(
-      `${chalk.blue("[" + Timestamp + " | ")}${chalk.yellowBright(
-        "WARN"
-      )}${chalk.blue("]:")} ${str}`
-    );
+    consoleWarn(FormattedString);
   }
 
   async error(str) {
     const Timestamp = moment().format("YYYY-MM-DD HH:mm:ss");
+    const FormattedString = `${chalk.blue(
+      "[" + Timestamp + " | "
+    )}${chalk.bgRedBright("ERROR")}${chalk.blue("]:")} ${str}`;
 
-    consoleError(
-      `${chalk.blue("[" + Timestamp + " | ")}${chalk.bgRedBright(
-        "ERROR"
-      )}${chalk.blue("]:")} ${str}`
-    );
+    consoleError(FormattedString);
   }
 
   async debug(str) {
     const Timestamp = moment().format("YYYY-MM-DD HH:mm:ss");
 
     if (debugEnabled) {
-      consoleDebug(
-        `${chalk.blue("[" + Timestamp + " | ")}${chalk.cyan(
-          "DEBUG"
-        )}${chalk.blue("]:")} ${str}`
-      );
+      const FormattedString = `${chalk.blue(
+        "[" + Timestamp + " | "
+      )}${chalk.cyan("DEBUG")}${chalk.blue("]:")} ${str}`;
+
+      consoleDebug(FormattedString);
     }
   }
 };
