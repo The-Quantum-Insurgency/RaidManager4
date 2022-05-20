@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@discordjs/rest": "^0.4.1",
-    "app-module-path": "^2.2.0",
     "bluebird": "^3.7.2",
     "chalk": "4",
     "discord-api-types": "^0.31.2",

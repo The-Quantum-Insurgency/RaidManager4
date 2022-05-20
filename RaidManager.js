@@ -4,9 +4,6 @@
  * @description RaidManager4 entry file.
  */
 
-// Add baseDir
-require("app-module-path").addPath(__dirname);
-
 const FileSystem = require("fs");
 const TOML = require("toml");
 

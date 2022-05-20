@@ -27,11 +27,16 @@ module.exports = class API {
       console.debug(`${FileName} found! Attempting to load keyset...`);
 
       try {
-        Keysets[FileName] = JSON.parse(FileSystem.readFileSync(`.config/api/keysets/${FileName}`));
+        Keysets[FileName.replace(".json", "")] = JSON.parse(FileSystem.readFileSync(`.config/api/keysets/${FileName}`));
       } catch (err) {
         console.error(err);
         console.error(`Error: keyset file ${FileName} failed to load! See error above.`);
       }
+    }
+
+    if (Keysets["example.keyset"]) {
+      console.warn("WARNING: EXAMPLE API KEYSET LOADED. To run the RaidManager REST API, you must delete or modify the example keyset");
+      return;
     }
 
     console.debug("API keysets loaded!");
@@ -44,7 +49,7 @@ module.exports = class API {
       const FileName = MiddlewareFiles[Index];
 
       try {
-        Middleware[FileName] = require(`./middleware/${FileName}`);
+        Middleware[FileName.replace(".json", "")] = require(`./middleware/${FileName}`);
       } catch (err) {
         console.error(err);
         console.error(`Error: middleware file ${FileName} failed to load! See error above.`);
@@ -61,7 +66,7 @@ module.exports = class API {
       const FileName = RouteFiles[Index];
 
       try {
-        Routes[FileName] = require(`./routes/${FileName}`);      } catch (err) {
+        Routes[FileName.replace(".json", "")] = require(`./routes/${FileName}`);      } catch (err) {
         console.error(err);
         console.error(`Error: route file ${FileName} failed to load! See error above.`);
       }
@@ -70,6 +75,7 @@ module.exports = class API {
     console.debug("API routes loaded!");
     this.Routes = Routes;
 
+    console.log("RaidManager API successfully started!");
     console.debug("========== END API LOAD OUTPUT ==========");
   };
   reload = async () => {};
