@@ -16,7 +16,7 @@ const { question } = require("readline-sync");
 
 // Variables
 const debugEnabled = process.argv.includes("--debug");
-const skipUpdate = process.argv.includes("--skip-update");
+const doUpdate = process.argv.includes("--update");
 
 // Functions
 const debug = console.debug;
@@ -40,8 +40,23 @@ try {
   process.exit(1);
 }
 
+// Check for CLI Config
+let cliConfig = undefined;
+try {
+  cliConfig = JSON.parse(FileSystem.readFileSync(".raidmanagerrc"));
+} catch (err) {
+  cliConfig = {};
+
+  try {
+    FileSystem.writeFileSync(".raidmanagerrc", "{}");
+  } catch (err) {
+    console.error(err);
+    console.error("ERROR: Failed to save .raidmanagerrc file!");
+  }
+}
+
 // Update check
-if (!skipUpdate) {
+if (cliConfig.check_for_updates_on_start || doUpdate) {
   console.log("Checking for updates...");
 
   consoleDebug("Running git remote update");

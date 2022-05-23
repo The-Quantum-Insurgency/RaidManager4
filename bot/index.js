@@ -155,7 +155,7 @@ module.exports = class Bot {
 
     const Categories = Array.from(Commands.keys());
 
-    Categories.forEach(CategoryName => {
+    Categories.forEach((CategoryName) => {
       const Category = Commands.get(CategoryName);
 
       console.log(Category);
