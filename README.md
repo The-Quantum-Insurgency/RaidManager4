@@ -84,6 +84,11 @@ To start the bot, run: `node raidmanager start`. Optionally, the `--debug` flag 
 The script `raidmanager` is the CLI tool used for interacting with the application. A list of commands can be found via `node raidmanager help` or just `node raidmanager`. The script is similar to [Laravel's](https://github.com/laravel/laravel) PHP Artisan CLI.
 
 ---
+## CLI Configuration
+If you'd like to modify the CLI to better suit your workflow, you can modify the ".raidmanagerrc" file that is automatically created upon running the RaidManager CLI for the first time.
+
+Currently, the only supported CLI Configuration option is `check_for_updates_on_start`, which as the name says, checks for updated when the RaidManager CLI is started.
+---
 ## Reporting Bugs & Problems
 
 If you find any bugs or have suggestions, use the [issues](https://github.com/imskyyc/RaidManager4/issues) tab on the RaidManager [GitHub](https://github.com/imskyyc/RaidManager4). For security vulnerabilities, please privately report them by creating a ticket in our [Discord Server](https://discord.gg/3AsPFgdUZ2).
