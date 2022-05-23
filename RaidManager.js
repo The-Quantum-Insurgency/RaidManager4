@@ -119,7 +119,7 @@ const RaidManager = {
       console.debug("Defining RaidManager environment...");
       RaidManager.Environment = {
         api: Configuration,
-        ...RaidManager.Environment
+        ...RaidManager.Environment,
       };
 
       console.debug("Creating new API object...");
