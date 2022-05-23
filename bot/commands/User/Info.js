@@ -26,10 +26,9 @@ module.exports = {
 
   cooldown: 30,
 
-  execute: async function (RaidManager, Interaction) {
+  execute: async function (Bot, Interaction) {
     const Member = Interaction.member;
-    const Client = RaidManager.Client;
-    const Commands = Client.Commands;
+    const Commands = Bot.Commands;
 
     // Parse Commands
     const Options = [];

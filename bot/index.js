@@ -70,7 +70,7 @@ module.exports = class Bot {
           continue;
         }
 
-        CommandCollection.set(CommandFile, Command);
+        CommandCollection.set(Command.name, Command);
       }
 
       CategoryCollection.set(Category, CommandCollection);
@@ -152,14 +152,25 @@ module.exports = class Bot {
 
   GetCommand = async function (CommandName) {
     const Commands = this.Commands;
+    let Command = undefined;
 
     const Categories = Array.from(Commands.keys());
 
-    Categories.forEach((CategoryName) => {
+    await Categories.every((CategoryName) => {
       const Category = Commands.get(CategoryName);
 
-      console.log(Category);
+      if (Category) {
+        Command = Category.get(CommandName);
+
+        if (Command) {
+          return false;
+        } else {
+          return true;
+        }
+      }
     });
+
+    return Command;
   };
 
   // Lifecycle hooks

@@ -103,9 +103,14 @@ module.exports = async (Bot, Interaction) => {
     }
 
     try {
-      await Command.execute(Bot, Interaction).catch(console.error);
+      await Command.execute(Bot, Interaction);
     } catch (error) {
       console.error(error);
+      return Interaction.reply({
+        content:
+          `An unexpected error was encountered during command execution. This error has been recorded. \`${error}\``,
+        ephemeral: true,
+      });
     }
   } else {
     return Interaction.reply({
