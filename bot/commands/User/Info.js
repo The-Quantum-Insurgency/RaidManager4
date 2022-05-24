@@ -4,18 +4,18 @@ const {
   MessageSelectMenu,
 } = require("discord.js");
 
-async function GetDefaultEmbed(RaidManager) {
+async function GetDefaultEmbed(Bot) {
   const InfoEmbed = new MessageEmbed()
     .setColor("BLURPLE")
-    .setTitle(`RaidManager3 Information Panel`)
+    .setTitle(`RaidManager Information Panel`)
     .setDescription(
       "The RaidManager is TQI's database interface and verification system. Commands Information Menus can be selected via the dropdown menu below."
     )
     .addField(
       "Credits",
-      "imskyyc - RaidManager Framework and Discord Bot\nTeo_O781 - Command cooldown system (PELBot)\nAnthonycanada - Eval command\nterryiscool160 - REST API Codebase"
+      "imskyyc - RaidManager Framework and Discord Bot\nTeo_O781 - Command cooldown system (PELBot)\nAnthonycanada - Eval command"
     )
-    .setFooter(await RaidManager.EmbedFooter(RaidManager));
+    .setFooter(await Bot.embedFooter(Bot));
 
   return InfoEmbed;
 }
@@ -27,6 +27,8 @@ module.exports = {
   cooldown: 30,
 
   execute: async function (Bot, Interaction) {
+    await Interaction.deferReply({ephemeral: true});
+
     const Member = Interaction.member;
     const Commands = Bot.Commands;
 
@@ -51,7 +53,7 @@ module.exports = {
       InfoSelectMenu,
     ]);
 
-    const InfoEmbed = await GetDefaultEmbed(RaidManager);
+    const InfoEmbed = await GetDefaultEmbed(Bot);
 
     try {
       const Info = await Member.send({
@@ -116,13 +118,13 @@ module.exports = {
         }
       });
 
-      return Interaction.reply({
+      return Interaction.editReply({
         content: "The help menu was sent in your Direct Messages.",
         ephemeral: true,
       });
     } catch (error) {
       console.log(error);
-      return Interaction.reply({
+      return Interaction.editReply({
         content:
           "I was unable to send you the help prompt due to your Direct Messages being disabled. Please enable Direct Messages from server members via the Privacy Settings menu in order to use this command.",
         ephemeral: true,

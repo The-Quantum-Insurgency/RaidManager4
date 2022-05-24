@@ -21,6 +21,7 @@ module.exports = class Bot {
   constructor(RaidManager) {
     this.RaidManager = RaidManager;
     this.Configuration = RaidManager.Environment.bot;
+    this.Version = RaidManager.VERSION;
   }
 
   LoadUtils = async function () {
