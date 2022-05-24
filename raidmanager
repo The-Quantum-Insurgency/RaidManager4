@@ -98,11 +98,12 @@ if (args.length == 0) {
   defaultCommands.execute(["help"]);
   process.exit(0);
 } else {
+  var isDefault = false;
   const commandArg = args[0];
 
   if (commandArg.includes(":")) {
     const commandSplit = commandArg.split(":");
-    args = [commandSplit[0], commandSplit[1], ...args];
+    args = [commandSplit[0], commandSplit[1], ...args.splice(1)];
   }
 
   let command = undefined;
@@ -110,7 +111,12 @@ if (args.length == 0) {
   try {
     command = commandModule = require(`${__dirname}/.tools/${args[0]}`);
   } catch (err) {
+    isDefault = true;
     command = require(`${__dirname}/.tools/default`);
+  }
+
+  if (!isDefault) {
+    args = args.splice(1);
   }
 
   command.execute(args, debug);
