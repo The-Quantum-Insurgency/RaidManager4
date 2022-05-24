@@ -84,7 +84,7 @@ module.exports = class API {
     console.debug("========== BEGIN API LOAD OUTPUT ==========");
     console.debug("RaidManager API load called!");
 
-    const Keysets = this.GetKeysets();
+    const Keysets = await this.GetKeysets();
 
     if (Keysets["example.keyset"]) {
       console.warn(
@@ -96,12 +96,12 @@ module.exports = class API {
     console.debug("API keysets loaded!");
     this.Keysets = Keysets;
 
-    const Middleware = this.GetMiddleware();
+    const Middleware = await this.GetMiddleware();
 
     console.debug("API Middleware loaded!");
     this.Middleware = Middleware;
 
-    const Routes = this.GetRoutes();
+    const Routes = await this.GetRoutes();
 
     console.debug("API routes loaded!");
     this.Routes = Routes;
