@@ -67,7 +67,7 @@ if (cliConfig.check_for_updates_on_start || doUpdate) {
   const gitBranch = execSync("git branch").toString();
 
   if (
-    !gitResponse.includes("Your branch is up to date with") ||
+    !gitResponse.includes("Your branch is up to date with") &&
     !gitResponse.includes("Your branch is ahead of")
   ) {
     // Branch could be outdated
