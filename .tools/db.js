@@ -17,6 +17,7 @@ const TOML = require("toml");
 const chalk = require("chalk");
 
 exports.execute = async function (args) {
+  const isForceful = args.includes("--force");
   const appDir = dirname(require.main.filename);
   const package = require(`${appDir}/package.json`);
   const appConfig = TOML.parse(readFileSync(".config/app.toml"));
@@ -35,19 +36,24 @@ exports.execute = async function (args) {
       console.log("Initializing RaidManager database...");
 
       console.log("Validating database migration files...");
-      const migrations = readdirSync(".config/db").filter((file) =>
+      const migrationFiles = readdirSync(".config/db").filter((file) =>
         file.endsWith(".js")
       );
 
-      migrations.every((file) => {
+      const migrations = {};
+
+      migrationFiles.every((file) => {
         process.stdout.write(`Validating ${file}... `);
         const migrationTable = require(`${appDir}/.config/db/${file}`);
 
         if (migrationTable.up) {
-          process.stdout.write(chalk.green("pass\n"));
+          console.log(chalk.green("pass"));
+
+          migrations[file.replace(".js", "")] = migrationTable;
+
           return true;
         } else {
-          process.stdout.write(chalk.red("fail\n"));
+          console.log(chalk.red("fail"));
           console.error(
             `${file} failed to validate. Please verify that ${file} has a up() method defined.`
           );
@@ -63,16 +69,70 @@ exports.execute = async function (args) {
       );
       console.log("Reading migrations table...");
 
+      var migrationTableData = null;
+
       try {
         const [migrationTableRows] = await connection.query(
           "SELECT * FROM `migrations`"
         );
-        console.log(migrationTableRows);
+
+        migrationTableData = migrationTableRows;
       } catch (err) {
-        const [createMigrationTableResults] = await connection.query(
-          "CREATE TABLE migrations();"
-        );
+        process.stdout.write("Creating migration table... ");
+
+        try {
+          await connection.query(
+            `CREATE TABLE migrations(
+               \`table_name\` TINYTEXT NOT NULL,
+               \`migrated_at\` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+             );`
+          );
+          console.log(chalk.green("SUCCESS"));
+          migrationTableData = [];
+        } catch (err) {
+          console.log(chalk.red("FAIL"));
+	  console.error(err);
+
+          process.exit(1);
+        }
       }
+
+      console.log("Filtering migrations...");
+
+      for (const Index in migrations) {
+        process.stdout.write(`Checking for ${Index} in migrations table... `);
+
+        const migrationEntry = migrationTableData.find(entry => entry.table_name == Index);
+
+        if (migrationEntry && !isForceful) {
+          console.log(chalk.red("exists"));
+          delete migrations[Index];
+        } else {
+          console.log(chalk.green("empty"));
+        }
+      }
+
+      console.log("Running database migrations...");
+
+      if (Object.keys(migrations).length == 0) {
+        console.log("Nothing to do.");
+        process.exit(0);
+      }
+
+      for (const Index in migrations) {
+        const migrationTable = migrations[Index];
+
+        process.stdout.write(`Migrating ${Index}... `);
+        try {
+          await migrationTable.up(connection);
+          await connection.query("INSERT INTO migrations(`table_name`) VALUES(?);", [Index]);
+          console.log(chalk.green("SUCCESS"));
+        } catch (err) {
+          console.log(chalk.red("FAIL"));
+          console.error(err);
+        }
+      }
+
       break;
     default:
       console.error("Error: Invalid command.");
