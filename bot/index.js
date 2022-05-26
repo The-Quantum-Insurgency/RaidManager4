@@ -5,7 +5,7 @@
  * @author imskyyc
  */
 
-const { readdir, stat } = require("fs/promises");
+const { readdir } = require("fs/promises");
 const { REST: DiscordAPIConnection } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v10");
 const { SlashCommandBuilder } = require("@discordjs/builders");
