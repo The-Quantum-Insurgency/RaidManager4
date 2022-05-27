@@ -133,6 +133,8 @@ exports.execute = async function (args) {
         }
       }
 
+      console.log("Database migration complete!");
+
       break;
     default:
       console.error("Error: Invalid command.");
