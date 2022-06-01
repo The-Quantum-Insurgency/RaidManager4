@@ -16,7 +16,7 @@ const { question } = require("readline-sync");
 
 // Variables
 const debugEnabled = process.argv.includes("--debug");
-const doUpdate = process.argv.includes("--update");
+const skipUpdate = process.argv.includes("--skip-update");
 
 // Functions
 const debug = console.debug;
@@ -56,7 +56,7 @@ try {
 }
 
 // Update check
-if (cliConfig.check_for_updates_on_start || doUpdate) {
+if (cliConfig.check_for_updates_on_start && !skipUpdate) {
   console.log("Checking for updates...");
 
   consoleDebug("Running git remote update");

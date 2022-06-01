@@ -4,11 +4,10 @@
 [app]
 APP_NAME = "RaidManager4"
 APP_VERSION = "4.0.0"
-BOT_ENABLED = true
-API_ENABLED = true
+BOT_ENABLED = false
+API_ENABLED = false
 
 [database]
-enabled = true
 type = "mysql"
 host = "127.0.0.1"
 base = "tqi"
