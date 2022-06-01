@@ -30,6 +30,7 @@ jobs:
         mysql password: password
     - uses: actions/cache@v3.0.3
       with:
+        path: raidmanager
         key: ${{ runner.os }}-raidmanager4
     - run: cp -r .config.example .config
     - run: "node raidmanager db:init --skip-update"
