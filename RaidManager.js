@@ -1,7 +1,8 @@
 /**
  * @name RaidManager.js
- * @author imskyyc
  * @description RaidManager4 entry file.
+ * @package raidmanager
+ * @author imskyyc
  */
 
 const FileSystem = require("fs");

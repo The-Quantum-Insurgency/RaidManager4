@@ -59,8 +59,6 @@ exports.execute = async function (args) {
           );
 
           process.exit(1);
-
-          return false;
         }
       });
 
@@ -124,9 +122,14 @@ exports.execute = async function (args) {
 
         process.stdout.write(`Migrating ${Index}... `);
         try {
-          await migrationTable.up(connection);
-          await connection.query("INSERT INTO migrations(`table_name`) VALUES(?);", [Index]);
-          console.log(chalk.green("SUCCESS"));
+          const successful = await migrationTable.up(connection);
+          
+          if (successful) {
+            await connection.query("INSERT INTO migrations(`table_name`) VALUES(?);", [Index]);
+            console.log(chalk.green("SUCCESS"));
+          } else {
+            console.log(chalk.red("FAIL"))
+          }
         } catch (err) {
           console.log(chalk.red("FAIL"));
           console.error(err);
