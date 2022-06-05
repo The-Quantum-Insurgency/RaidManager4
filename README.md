@@ -49,8 +49,6 @@ And you're done!
 
 To run the Raid Manager, you need to have a working MySQL or MariaDB installation, and configure the credentials in `.config/app.toml`. The Raid Manager makes use of the TOML configuration file type. Documentation can be found [here](https://toml.io/en/).
 
-**Note: The Raid Manager was developed around MariaDB. MySQL support is NOT tested.**
-
 Example of app.toml:
 ```toml
 # Raid Manager global configuration
