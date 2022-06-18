@@ -1,5 +1,7 @@
 #!/usr/bin/node
 
+if (process.platform == "win32") throw new Error("RaidManager does not support the win32 platform.");
+
 /**
  * @name raidmanager
  * @description RaidManager CLI entry point
