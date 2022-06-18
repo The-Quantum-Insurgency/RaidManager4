@@ -21,13 +21,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use MySQL
+    - name: Set up MySQL
       uses: mirromutth/mysql-action@v1.1
       with: 
         host port: 3306
-        mysql database: tqi
-        mysql user: RaidManager4
-        mysql password: password
+        mysql database: 'tqi'
+        mysql user: 'RaidManager4'
+        mysql password: 'password'
     - uses: actions/cache@v3.0.3
       with:
         path: raidmanager
