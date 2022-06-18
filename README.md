@@ -67,7 +67,14 @@ host = "127.0.0.1"
 base = "tqi"
 user = "RaidManager4"
 pass = "password"
+
+[redis]
+enabled = false
 ```
+
+After configuring your database connection, you must run:
+`node raidmanager db:init`.
+This will migrate all tables defined in the `.config/db` folder to the database, so data can be read from and written to.
 
 Also, if using the discord bot, make sure to update the token and settings in `.config/bot/bot.toml`. The files `guidelines.json` and `status.json` are for configuring TQI's guidelines in the [#guidelines](https://discord.com/channels/857445688932696104/857449102220591114) channel in our discord. `gudelines.json` can safely be removed, but will break commands like `/information` due to them requiring the file to be present.
 

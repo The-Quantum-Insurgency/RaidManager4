@@ -13,3 +13,6 @@ host = "127.0.0.1"
 base = "tqi"
 user = "RaidManager4"
 pass = "password"
+
+[redis]
+enabled = false
