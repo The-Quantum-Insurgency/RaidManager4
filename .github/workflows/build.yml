@@ -36,7 +36,6 @@ jobs:
     - run: cp -r .config.example .config
     - run: "node raidmanager db:init --skip-update"
     - run: "node raidmanager start --debug --skip-update"
-    - run: "node raidmanager stop --skip-update"
     - name: "Build docker image"
       run: "node raidmanager docker:build"
     - name: "Run RaidManager in docker image"
