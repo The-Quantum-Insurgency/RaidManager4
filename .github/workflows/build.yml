@@ -34,7 +34,6 @@ jobs:
         key: ${{ runner.os }}-raidmanager4
     - run: "npm install"
     - run: cp -r .config.example .config
-    - name: "Test RaidManager against system nodejs 18"
     - run: "node raidmanager db:init --skip-update"
     - run: "node raidmanager start --debug --skip-update"
     - run: "node raidmanager stop --skip-update"
