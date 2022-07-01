@@ -1,8 +1,8 @@
 ## <strong>RaidManager4</strong>
 <br />
 <div align="center">
-    <a href="https://github.com/imskyyc/RaidManager4/actions/workflows/node.js.yml">
-        <img src="https://github.com/imskyyc/RaidManager4/actions/workflows/node.js.yml/badge.svg">
+    <a href="https://github.com/imskyyc/RaidManager4/actions/workflows/build.yml">
+        <img src="https://github.com/imskyyc/RaidManager4/actions/workflows/build.yml/badge.svg">
     </a>
     <a href="https://github.com/imskyyc/RaidManager4/blob/master/LICENSE">
         <img src="https://img.shields.io/github/license/imskyyc/RaidManager4"/>
