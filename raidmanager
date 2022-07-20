@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-if (process.platform == "win32") throw new Error("RaidManager does not support the win32 platform.");
+// if (process.platform == "win32") throw new Error("RaidManager does not support the win32 platform.");
 
 /**
  * @name raidmanager

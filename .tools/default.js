@@ -13,7 +13,8 @@ const { dirname } = require("path");
 const { readFileSync, writeFileSync } = require("fs");
 exports.execute = async function (args) {
   const appDir = dirname(require.main.filename);
-  const raidManager = require(`${appDir}/RaidManager`);
+  const raidManager = require(`${appDir}/RaidManager.js`);
+
   const lockFile = await raidManager.getLockFile();
   const package = require(`${appDir}/package.json`);
   const cliConfig = JSON.parse(readFileSync(`.raidmanagerrc`));
