@@ -20,6 +20,7 @@ module.exports = class Bot {
 
   constructor(RaidManager) {
     this.RaidManager = RaidManager;
+    this.Database = RaidManager.database;
     this.Configuration = RaidManager.Environment.bot;
     this.Version = RaidManager.VERSION;
   }
