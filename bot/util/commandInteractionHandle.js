@@ -106,11 +106,19 @@ module.exports = async (Bot, Interaction) => {
       await Command.execute(Bot, Interaction);
     } catch (error) {
       console.error(error);
-      return Interaction.reply({
+      
+      const replyContent = {
         content:
-          `An unexpected error was encountered during command execution. This error has been recorded. \`${error}\``,
-        ephemeral: true,
-      });
+          `An unexpected error was encountered during command execution. This error has been recorded. \`${error}\``
+      }
+
+      const reply = await Interaction.fetchReply();
+
+      if (reply) {
+        return Interaction.editReply(replyContent);
+      } else { 
+        return Interaction.reply(replyContent);
+      }
     }
   } else {
     return Interaction.reply({

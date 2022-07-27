@@ -2,8 +2,8 @@ const { SlashCommandStringOption, SlashCommandRoleOption, SlashCommandBooleanOpt
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
-    name: "bind",
-    description: "Lets guild administrators bind roblox group ranks / gamepasses / players to Discord roles.",
+    name: "unbind",
+    description: "Lets guild administrators unbind roblox group ranks / gamepasses / players from Discord roles.",
 
     permissions: ["NODE:ADMINISTRATOR"],
 
@@ -21,16 +21,11 @@ module.exports = {
             )
             .setName("type")
             .setDescription("The type of asset to bind.")
-            .setRequired(true),
+            .setRequired(false),
 
         new SlashCommandStringOption()
             .setName("data")
             .setDescription("AssetId / GroupId:MinRank:MaxRank / UserId")
-            .setRequired(true),
-
-        new SlashCommandBooleanOption()
-            .setName("default")
-            .setDescription("Should the role be given to everyone after verifying?")
             .setRequired(false)
     ],
 
@@ -46,7 +41,6 @@ module.exports = {
         const RoleId = Arguments.getRole("role").id;
         const RoleType = Arguments.getString("type");
         const RoleData = Arguments.getString("data");
-        const RoleIsDefault = Arguments.getBoolean("default");
 
         const GuildData = await Database.getGuild(Guild.id) || await Database.setGuild(Guild.id);
         const BindData = JSON.parse(GuildData.bind_data);
@@ -54,6 +48,14 @@ module.exports = {
         const RoleBindData = BindData[RoleId];
 
         async function pushBindsToDatabase(BindData) {
+            var unbindString = "Success: Unbound ";
+
+            if (RoleType != null && RoleData != null) {
+                unbindString = unbindString + ` type \`${RoleType}\` with data \`${RoleData}\` from role <@&${RoleId}>.`;
+            } else {
+                unbindString = unbindString + ` <@&${RoleId}>.`
+            }
+
             try {
                 await Database.setGuild(Guild.id, {
                     bind_data: BindData
@@ -62,7 +64,7 @@ module.exports = {
                 return Interaction.editReply({
                     embeds: [
                         new MessageEmbed()
-                            .setDescription(`Success: Bound role <@&${RoleId}> to type \`${RoleType}\` with data \`${RoleData}\`.`)
+                            .setDescription(unbindString)
                     ]
                 })
             } catch (error) {
@@ -75,40 +77,36 @@ module.exports = {
             }
         }
 
-        if (RoleBindData) {
+        if (RoleBindData && RoleType != null && RoleData != null) {
             const Binds = RoleBindData.binds
             const Bind = await Binds.find(roleBind => roleBind.type == RoleType && roleBind.data == RoleData);
+            const Index = Binds.indexOf(Bind);
 
             if (Bind) {
+                await Binds.splice(Index, 1);
+
+                pushBindsToDatabase(BindData);
+            } else {
                 return Interaction.editReply({
                     embeds: [
                         new MessageEmbed()
-                            .setDescription(`Error: A role bind matching type ${RoleType} and data ${RoleData} already exists for role <@&${RoleId}>.`)
+                            .setDescription(`Error: No role bind data for type ${RoleType} and data ${RoleData} was found for role <@&${RoleId}>.`)
                     ]
                 })
-            } else {
-                const Binds = RoleBindData.binds
-
-                await Binds.push({
-                    type: RoleType,
-                    data: RoleData
-                })
-
-                return pushBindsToDatabase(BindData);
             }
         } else {
-            BindData[RoleId] = {
-                binds: [
-                    {
-                        type: RoleType,
-                        data: RoleData,
-                    },
-                ],
+            if (!RoleType && !RoleData) {
+                delete BindData[RoleId];
 
-                isDefault: RoleIsDefault
+                pushBindsToDatabase(BindData);
+            } else {
+                return Interaction.editReply({
+                    embeds: [
+                        new MessageEmbed()
+                            .setDescription(`Error: No role bind data for role <@&${RoleId}> was found.`)
+                    ]
+                })
             }
-
-            return pushBindsToDatabase(BindData);
         }
     }
 }

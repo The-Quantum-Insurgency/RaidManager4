@@ -13,6 +13,7 @@ const {
   Client: BotClient,
   Intents: ClientIntents,
   Collection,
+  MessageEmbed
 } = require("discord.js");
 
 module.exports = class Bot {
@@ -20,7 +21,8 @@ module.exports = class Bot {
 
   constructor(RaidManager) {
     this.RaidManager = RaidManager;
-    this.Database = RaidManager.database;
+    this.database = RaidManager.database;
+
     this.Configuration = RaidManager.Environment.bot;
     this.Version = RaidManager.VERSION;
   }
@@ -107,13 +109,17 @@ module.exports = class Bot {
 
     Array.from(Collection.values()).forEach((Category) => {
       Array.from(Category.values()).forEach((Command) => {
-        const SlashCommand = new SlashCommandBuilder()
+        try {
+          const SlashCommand = new SlashCommandBuilder()
           .setName(Command.name)
           .setDescription(Command.description);
 
-        SlashCommand.options = Command.options || [];
+          SlashCommand.options = Command.options || [];
 
-        Commands.push(SlashCommand.toJSON());
+          Commands.push(SlashCommand.toJSON());
+        } catch (error) {
+           console.error(`SlashCommand ${Command.name} failed to load. Error: ${error}`)
+        }
       });
     });
 
