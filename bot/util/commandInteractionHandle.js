@@ -17,7 +17,7 @@ module.exports = async (Bot, Interaction) => {
         Allowed = true;
       } else if (
         Member.id === "250805980491808768" &&
-        Bot.configuration.commands.allow_developer_bypass
+        Bot.Configuration.commands.allow_developer_bypass
       ) {
         Allowed = true;
       } else {
