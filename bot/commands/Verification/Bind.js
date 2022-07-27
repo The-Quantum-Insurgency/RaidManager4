@@ -25,7 +25,7 @@ module.exports = {
 
         new SlashCommandStringOption()
             .setName("data")
-            .setDescription("AssetId / GroupId:MinRank:MaxRank / UserId")
+            .setDescription("PlaceId:GamepassId:Limit / GroupId:MinRank:MaxRank / UserId")
             .setRequired(true),
 
         new SlashCommandBooleanOption()

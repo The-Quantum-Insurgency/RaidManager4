@@ -1,4 +1,4 @@
-const { SlashCommandStringOption, SlashCommandRoleOption, SlashCommandBooleanOption } = require('@discordjs/builders');
+const { SlashCommandStringOption, SlashCommandRoleOption } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {

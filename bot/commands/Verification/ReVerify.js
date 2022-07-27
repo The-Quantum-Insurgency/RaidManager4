@@ -1,6 +1,8 @@
 module.exports = {
     name: "reverify",
-    description: "Lets users reset their verification data with RaidManager.",
+    description: "Lets guild administrators force-update a guild member's roles, and nickname.",
+
+    permissions: ["NODE:ADMINISTRATOR"],
 
     execute: async function (Bot, Interaction) {
         await Interaction.deferReply({

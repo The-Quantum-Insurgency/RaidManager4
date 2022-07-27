@@ -40,7 +40,7 @@ module.exports = {
                             new MessageEmbed()
                                 .setColor("RED")
                                 .setTitle("RaidManager Re-Verification")
-                                .setDescription("You are already verified in the RaidManager database. If you would like to update your roles, run /reverify. Your data **will** be preserved whilst reverifying, but it is encouraged to run /mydata so there's a record of your prior data. Are you sure you want to re-verify?")
+                                .setDescription("You are already verified in the RaidManager database. If you would like to update your roles, run /update. Your data **will** be preserved whilst reverifying, but it is encouraged to run /mydata so there's a record of your prior data. Are you sure you want to re-verify?")
                                 .setFooter({text: "Prompt will time out in 30 seconds."})
                                 .setTimestamp()
                         ],
@@ -484,7 +484,7 @@ module.exports = {
                 embeds: [
                     new MessageEmbed()
                         .setTitle("RaidManager Verification")
-                        .setDescription("Success! Your account has been verified. Please run /reverify to obtain your roles.")
+                        .setDescription("Success! Your account has been verified. Please run /update to obtain your roles.")
                         .setColor("GREEN")
                         .setTimestamp()
                 ],
