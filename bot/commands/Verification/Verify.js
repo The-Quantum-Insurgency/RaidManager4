@@ -17,8 +17,6 @@ module.exports = {
 
         const UserData = await Database.getUser(Member.id);
 
-        console.log(UserData);
-
         // Message componenets
         const ConfirmButton = new MessageButton()
             .setCustomId("true")
@@ -242,11 +240,6 @@ module.exports = {
                                     inline: true
                                 },
                                 {
-                                    name: "Display Name",
-                                    value: PlayerInfo.displayName,
-                                    inline: true
-                                },
-                                {
                                     name: "Account Age",
                                     value: `${PlayerInfo.age} days`,
                                     inline: true
@@ -254,7 +247,7 @@ module.exports = {
                                 {
                                     name: "Bio",
                                     value: PlayerInfo.blurb,
-                                    inline: true
+                                    inline: false
                                 }
                             ])
                     ],

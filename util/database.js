@@ -52,7 +52,9 @@ const Database = class Database {
       userId
     ])
 
-    return results[0];
+    if (results.rows) {
+      return results.rows[0]; 
+    }
   }
 
   setUser = async function(userId, dataTable) {
