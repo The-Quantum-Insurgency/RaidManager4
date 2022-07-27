@@ -33,7 +33,7 @@ module.exports = {
             for (const Index in Binds) {
                 const Bind = Binds[Index];
 
-                BindString = BindString + ` - \`${Bind.type}:${Bind.data}\`; isDefault: \`${IsDefault}\``
+                BindString = BindString + ` - \`${Bind.type}:${Bind.data}\`; isDefault: \`${IsDefault}\`\n`
             }
 
             BindStrings.push(BindString);

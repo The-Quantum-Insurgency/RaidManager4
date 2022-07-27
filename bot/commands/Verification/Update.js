@@ -1,4 +1,4 @@
-const { getRankInGroup, getGamePasses, getUniverseInfo } = require("noblox.js");
+const { getRankInGroup, getGamePasses, getUniverseInfo, getUsernameFromId } = require("noblox.js");
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
@@ -19,8 +19,6 @@ module.exports = {
 
         const UserData = await Database.getUser(Member.id);
 
-        console.oldLog(UserData);
-
         if (!UserData) {
             return await Interaction.editReply({
                 embeds: [
@@ -29,8 +27,7 @@ module.exports = {
                         .setDescription(`No userdata was found for ${Member.id}.`)
                         .setColor("RED")
                         .setTimestamp()
-                ],
-                components: []
+                ]
             })
         }
 
@@ -39,7 +36,6 @@ module.exports = {
         const Promises = [];
 
         for (const RoleId in BindData) {
-            console.log(RoleId)
             const RoleData = BindData[RoleId];
 
             const Binds = RoleData.binds;
@@ -84,9 +80,9 @@ module.exports = {
                             var GroupRank = 0;
 
                             try {
-                                GroupRank = await getRankInGroup(UserId);
+                                GroupRank = await getRankInGroup(GroupId, UserId);
                             } catch (error) {
-                                Errors.push(`Error fetching GroupRank for ${UserId} in group ${GroupId} with data ${Data}.`)
+                                Errors.push(`Error fetching GroupRank for ${UserId} in group ${GroupId} with data ${Data}. ${error}`)
 
                                 break;
                             }
@@ -97,8 +93,9 @@ module.exports = {
 
                             break;
                         case "gamepass":
+                            continue;
                             const GamepassComponents = Data.split(":") || [];
-                            
+
                             const PlaceId = GamepassComponents[0];
                             const GamepassId = GamepassComponents[1];
                             const Limit = GamepassComponents[2];
@@ -139,9 +136,57 @@ module.exports = {
                             break;
                     }
                 }
+
+                if (CanGetRole) {
+                    Promises.push(async (resolve) => {
+                        try {
+                            await Member.roles.add(RoleId)
+    
+                            resolve();
+                        } catch (error) {
+                            Errors.push(`Error applying role <@&${RoleId}>. - \`${error} \``);
+                            resolve();
+                        }
+                    })
+                } else {
+                    Promises.push(async (resolve) => {
+                        try {
+                            const ExistingRole = await Member.roles.resolve(RoleId);
+                            
+                            if (ExistingRole) {
+                                await Member.roles.remove(ExistingRole)
+                            }
+    
+                            resolve();
+                        } catch (error) {
+                            Errors.push(`Error removing role <@&${RoleId}>. - \`${error} \``);
+                            resolve();
+                        }
+                    })
+                }
             }
         }
 
-        await Promise.all(Promises);
+        for (const FunctionIndex in Promises) {
+            const Function = Promises[FunctionIndex];
+
+            await new Promise(Function);
+        }
+
+        try {
+            await Member.setNickname(await getUsernameFromId(UserId))
+        } catch (error) {
+            Errors.push(`Error setting user nickname. ${error}.`)
+        }
+
+        return await Interaction.editReply({
+            embeds: [
+                new MessageEmbed()
+                    .setTitle("RaidManager Verification")
+                    .setDescription(`Update complete. ${(Errors.length > 0 && `Errors: \n${Errors.join("\n")}`) || ""}`)
+                    .setColor("ORANGE")
+                    .setTimestamp()
+            ]
+        })
     }
 }
