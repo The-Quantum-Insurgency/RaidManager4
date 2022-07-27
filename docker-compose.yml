@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  app:
+    build: .
+    depends_on: 
+      - db
+    restart: always
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: tqi
+      MYSQL_USER: RaidManager4
+      MYSQL_PASSWORD: password
+      MYSQL_RANDOM_ROOT_PASSWORD: true
+    ports: 
+      - "3306:3306"
+  
