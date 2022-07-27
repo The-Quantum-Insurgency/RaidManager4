@@ -52,8 +52,8 @@ const Database = class Database {
       userId
     ])
 
-    if (results.rows) {
-      return results.rows[0]; 
+    if (results[0]) {
+      return results[0][0]; 
     }
   }
 
