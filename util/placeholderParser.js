@@ -20,7 +20,7 @@ const PlaceholderParser = class PlaceholderParser {
   Parse = async function (String) {
     const RaidManager = this.RaidManager;
     const Placeholders = {
-      FRAMEWORK_VERSION: `${RaidManager.VERSION}`,
+      BOT_VERSION: `${RaidManager.VERSION}`,
     };
 
     for (const Key in Placeholders) {
