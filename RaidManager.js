@@ -88,7 +88,12 @@ const RaidManager = {
 
     // Load .ROBLOSECURITY in to memory for anything that might need it.
     console.debug("Setting ROBLOSECURITY cookie...")
-    await setCookie(Environment.roblox.roblosecurity, true)
+    try {
+      await setCookie(Environment.roblox.roblosecurity, true)
+    } catch (error) {
+      console.error(error);
+      console.error(`Error: cookie failed to set.`)
+    }
 
     if (Environment.app.BOT_ENABLED) {
       console.debug("Bot enabled! Loading...");

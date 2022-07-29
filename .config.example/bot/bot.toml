@@ -6,8 +6,8 @@ token = ""
 [commands]
 enable_slash_commands = true
 slash_command_guilds = []
-enable_message_commands = true
-message_command_prefix = ";"
+import_requests_channel_id = ""
+allow_developer_bypass = true
 
 [files]
 status_message_file = "status.json"
