@@ -7,6 +7,7 @@
 
 const FileSystem = require("fs");
 const TOML = require("toml");
+const { setCookie } = require("noblox.js");
 
 const Environment = TOML.parse(FileSystem.readFileSync(".config/app.toml"));
 
@@ -84,6 +85,10 @@ const RaidManager = {
     // Initialize database
     console.debug("Initializing database...");
     await RaidManager.database.up();
+
+    // Load .ROBLOSECURITY in to memory for anything that might need it.
+    console.debug("Setting ROBLOSECURITY cookie...")
+    await setCookie(Environment.roblox.roblosecurity, true)
 
     if (Environment.app.BOT_ENABLED) {
       console.debug("Bot enabled! Loading...");

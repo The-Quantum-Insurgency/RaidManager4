@@ -1,6 +1,7 @@
-const { getRankInGroup, getGamePasses, getUniverseInfo, getUsernameFromId } = require("noblox.js");
+const { getRankInGroup, getGamePasses, getUsernameFromId, getOwnership } = require("noblox.js");
 const { SlashCommandUserOption } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
+const fetch = require("node-fetch");
 
 module.exports = {
     name: "reverify",
@@ -118,7 +119,6 @@ module.exports = {
 
                             break;
                         case "gamepass":
-                            continue;
                             const GamepassComponents = Data.split(":") || [];
 
                             const PlaceId = GamepassComponents[0];
@@ -133,21 +133,53 @@ module.exports = {
 
                             var Gamepasses = []
 
-                            const universeInfo = await getUniverseInfo([PlaceId]);
-
-                            console.oldLog(universeInfo);
+                            var UniverseId = 0;
 
                             try {
-                                Gamepasses = await getGamePasses(PlaceId, Limit);
-                            } catch (error) {
-                                Errors.push(`Error developer products from place ${PlaceId} with data ${Data}.`)
+                                const MultigetDetails = await fetch(`https://games.roblox.com/v1/games/multiget-place-details?placeIds=${PlaceId}`, {
+                                    headers: {
+                                        cookie: `.ROBLOSECURITY=${Bot.RaidManager.Environment.roblox.roblosecurity}`
+                                    }
+                                }).then(res => res.json());
 
-                                console.oldLog(error);
+                                UniverseId = MultigetDetails[0].universeId
+                            } catch (error) {
+                                Errors.push(`Error fetching universeInfo for ${PlaceId}. Error: ${error}`)
+
+                                break;
+                            }
+
+                            try {
+                                Gamepasses = await getGamePasses(UniverseId, Limit);
+                            } catch (error) {
+                                Errors.push(`Error fetching gamepasses from place ${PlaceId} with data ${Data}.`)
 
                                 break;
                             }
                             
-                            console.oldLog(Gamepasses)
+                            const Gamepass = await Gamepasses.find(pass => pass.id == GamepassId);
+
+                            if (!Gamepass) {
+                                Errors.push(`A gamepass matching ID ${GamepassId} could not be found with type \`${Type}\` and data \`${Data}\`.`)
+
+                                break;
+                            }
+
+                            var UserOwnsGamepass = false;
+
+                            try {
+                                UserOwnsGamepass = await getOwnership(UserId, Gamepass.id, "GamePass");
+                            } catch (error) {
+                                Errors.push(`Ownership of gamepass ${Gamepass.id} could not be verified for user ${UserId}.`)
+
+                                break;
+                            }
+
+                            if (UserOwnsGamepass) {
+                                CanGetRole = true;
+
+                                break;
+                            }
 
                             break;
                         case "userid":

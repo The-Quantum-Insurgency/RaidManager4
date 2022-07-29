@@ -19,7 +19,7 @@ module.exports = {
    */
   execute: async function (RaidManager, Interaction) {
     CleanString = async (string) => {
-      if (string && string.constructor.name == "Promise") string = await string;
+      if (string && string.constructor && string.constructor.name == "Promise") string = await string;
       if (typeof string !== "string")
         string = require("util").inspect(string, { depth: 1 });
 
@@ -29,7 +29,19 @@ module.exports = {
         .replace(
           RaidManager.Client.token,
           "[Content Removed for Security Reasons.]"
-        );
+        )
+        .replace(
+          RaidManager.RaidManager.Environment.roblox.roblosecurity,
+          "[Content Removed for Security Reasons.]"
+        )
+        .replace(
+          RaidManager.RaidManager.Environment.database.host,
+          "[Content Removed for Security Reasons.]"
+        )
+        .replace(
+          RaidManager.RaidManager.Environment.database.pass,
+          "[Content Removed for Security Reasons.]"
+        )
       return string;
     };
     try {

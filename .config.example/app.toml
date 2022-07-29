@@ -7,6 +7,9 @@ APP_VERSION = "4.0.0"
 BOT_ENABLED = false
 API_ENABLED = false
 
+[roblox]
+roblosecurity = ""
+
 [database]
 type = "mysql"
 host = "127.0.0.1"
