@@ -22,7 +22,7 @@
     "bluebird": "^3.7.2",
     "chalk": "4",
     "discord-api-types": "^0.36.3",
-    "discord.js": "^13.6.0",
+    "discord.js": "^14.0.0",
     "express": "^4.17.3",
     "moment": "^2.29.3",
     "mysql2": "^2.3.3",
