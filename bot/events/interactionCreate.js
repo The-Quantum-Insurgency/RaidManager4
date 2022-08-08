@@ -7,10 +7,6 @@
  */
 const { Collection, MessageEmbed } = require("discord.js");
 
-function FirstToUpper(String) {
-  return String.charAt(0).toUpperCase() + String.subtring(1);
-}
-
 module.exports = async function (Bot, Interaction) {
   const Client = Bot.Client;
   const Member = Interaction.member;
@@ -23,5 +19,9 @@ module.exports = async function (Bot, Interaction) {
 
   if (Interaction.isCommand()) {
     Bot.commandInteractionHandle(Bot, Interaction);
+  }
+
+  if (Interaction.isButton() && Interaction.customId.includes("point_")) {
+    Bot.importInteractionHandle(Bot, Interaction);
   }
 };

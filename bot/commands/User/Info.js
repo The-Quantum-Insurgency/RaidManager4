@@ -11,10 +11,12 @@ async function GetDefaultEmbed(Bot) {
     .setDescription(
       "The RaidManager is TQI's database interface and verification system. Commands Information Menus can be selected via the dropdown menu below."
     )
-    .addField(
-      "Credits",
-      "imskyyc - RaidManager Framework and Discord Bot\nTeo_O781 - Command cooldown system (PELBot)\nAnthonycanada - Eval command"
-    )
+    .addFields([
+      {
+        name: "Credits",
+        value: "imskyyc - RaidManager Framework and Discord Bot\nTeo_O781 - Command cooldown system (PELBot)\nAnthonycanada - Eval command"
+      }
+    ])
     .setFooter(await Bot.embedFooter(Bot));
 
   return InfoEmbed;

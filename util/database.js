@@ -63,10 +63,9 @@ const Database = class Database {
     var existingUser = await this.getUser(userId);
 
     if (existingUser) {
-      results = await this.query(`UPDATE users SET user_id=?, events_attended=?, points=?, squadron=?, roblox_id=? WHERE user_id=?`, [
+      results = await this.query(`UPDATE users SET user_id=?, events_attended=?, squadron=?, roblox_id=? WHERE user_id=?`, [
         dataTable.user_id || existingUser.user_id || userId,
         dataTable.events_attended || existingUser.events_attended || 0,
-        dataTable.points || existingUser.points || 0,
         dataTable.squadron || existingUser.squadron || "None",
         dataTable.roblox_id || existingUser.roblox_id || -1,
 
@@ -76,14 +75,12 @@ const Database = class Database {
       await this.query(`INSERT INTO users(
         user_id,
         events_attended,
-        points,
         squadron,
         roblox_id
-      ) VALUES(?, ?, ?, ?, ?)`, [
+      ) VALUES(?, ?, ?, ?)`, [
         userId,
 
         dataTable.events_attended || 0,
-        dataTable.points || 0,
         dataTable.squadron || "None",
         dataTable.roblox_id || -1
       ])
@@ -109,13 +106,15 @@ const Database = class Database {
     var dataTable = dataTable || {};
 
     dataTable.bind_data = JSON.stringify(dataTable.bind_data);
+    dataTable.pending_imports = JSON.stringify(dataTable.pending_imports);
     dataTable.audit_logs = JSON.stringify(dataTable.audit_logs);
 
     var existingGuild = await this.getGuild(guildId);
     if (existingGuild) {
 
-      results = await this.query(`UPDATE guild_data SET bind_data=?,audit_logs=? WHERE guild_id=?`, [
+      results = await this.query(`UPDATE guild_data SET bind_data=?,pending_imports=?,audit_logs=? WHERE guild_id=?`, [
         dataTable.bind_data || existingGuild.bind_data,
+        dataTable.pending_imports || existingGuild.pending_imports,
         dataTable.audit_logs || existingGuild.audit_logs,
         
         guildId
@@ -125,11 +124,13 @@ const Database = class Database {
       await this.query(`INSERT INTO guild_data(
         guild_id,
         bind_data,
+        pending_imports,
         audit_logs
-      ) VALUES(?, ?, ?)`, [
+      ) VALUES(?, ?, ?, ?)`, [
         guildId,
 
         dataTable.bind_data || '[]',
+        dataTable.pending_imports || '[]',
         dataTable.audit_logs || '{"channel_id": 0, "hooks": [], "logs": []}'
       ])
 

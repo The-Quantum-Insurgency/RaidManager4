@@ -4,17 +4,18 @@ module.exports = {
     name: "import",
     description: "Allows insurgents+ to import attendance data for a Major+ to approve.",
 
-    permissions: ["ROLE:857447098709704736", "NODE:ADMINISTRATOR"],
+    permissions: ["ROLE:857447098709704736", "NODE:ADMINISTRATOR", "ROLE:966594489777016863"],
 
     execute: async function (Bot, Interaction) {
         await Interaction.deferReply();
 
+        const Database = Bot.database;
         const Channel = Interaction.channel;
         const Member = Interaction.member;
+        const Guild = Interaction.guild;
 
-        var Imported = false;
         var CoAuthorToggle = false;
-        const ImportData = {}
+        const ImportData = {};
         const CoAuthors = [Member.id]
 
         const ConfirmButton = new MessageButton()
@@ -36,12 +37,13 @@ module.exports = {
 
         const AttendanceEmbed = new MessageEmbed()
             .setTitle("Import Attendance")
-            .setDescription("Please ping the players you wish to add points to, in the format: \n(Point Amount) - @user1,@user2,@user3,...\n\nExample: 2 - @imskyyc,@JustTucky,@tannibus\n\nExample 2: -2 - @imskyyc,@JustTucky,@tannibus\n\nTo add a co-author, ping them after pressing the \"Add CoAuthor\" button.\nImported data is shown below:")
+            .setDescription("Please ping the players you wish to add / subtract event logs to / from, in the format: \n(Point Amount) - @user1,@user2,@user3,...\n\nExample: 2 - @imskyyc,@JustTucky,@tannibus\n\nExample 2: -2 - @imskyyc,@JustTucky,@tannibus\n\nTo add a co-author, ping them after pressing the \"Add CoAuthor\" button.\nImported data is shown below:")
             .setTimestamp()
             .setFooter({text: "Prompt will time out in 10 minutes."})
+            .setColor("ORANGE")
 
         // Re-render Attendance embed
-        async function renderAttendanceEmbed() {
+        async function renderAttendanceEmbed(skipEdit) {
             const Fields = []
             
             for (const PointValue in ImportData) {
@@ -49,23 +51,106 @@ module.exports = {
 
                 if (PointData && PointData.length > 0) {
                     Fields.push({
-                        name: `${PointValue}`,
-                        value: PointData.join(",")
+                        name: `${PointValue} Event${(PointValue != 1 && "s") || ""}`,
+                        value: `<@${PointData.join(">, <@")}>`
                     })
                 }
             }
 
             AttendanceEmbed.setFields(Fields);
 
-            await Interaction.editReply({
-                embeds: [AttendanceEmbed],
-                components: [ConfirmationActionRow]
-            })
+            if (!skipEdit) {
+                await Interaction.editReply({
+                    embeds: [AttendanceEmbed],
+                    components: [ConfirmationActionRow]
+                })
+            }
         }
 
         // Send import
         async function sendImport() {
-            renderAttendanceEmbed();
+            const TempMessage = await Channel.send("Importing data. Please wait...");
+            
+            renderAttendanceEmbed(true);
+            
+            AttendanceEmbed.setTitle("Attendance Import Request");
+            AttendanceEmbed.setFooter({text: ""});
+
+            try {
+                const GuildData = await Database.getGuild(Guild.id);
+                const PendingImports = await JSON.parse(GuildData.pending_imports)
+                
+                if (PendingImports[Reply.id]) {
+                    throw new Error(`An Attendance Import matching id ${Reply.id} already exists. Please try again.`)
+                } else {
+                    PendingImports[Reply.id] = {
+                        host_id: Member.id,
+                        import_data: ImportData
+                    }
+
+                    await Database.setGuild(Guild.id, {
+                        pending_imports: PendingImports
+                    })
+                }
+            } catch (error) {
+                try {
+                    TempMessage.delete()
+                } catch (error) {}
+
+                AttendanceEmbed.setColor("RED");
+                AttendanceEmbed.setDescription(`Attendance data failed to import. Error: ${error}`)
+
+                return await Interaction.editReply({
+                    embeds: [AttendanceEmbed],
+                    components: [],
+                })
+            }
+
+            await Interaction.editReply({
+                embeds: [AttendanceEmbed],
+                components: [],
+            })
+
+            AttendanceEmbed.setDescription(`**Requested by**\n<@${Member.id}>\n**At**\n${new Date().toString()}\n**In**\n<#${Channel.id}>`)
+
+            try {
+                ConfirmButton.setLabel("Import")
+                    .setCustomId(`point_import/${Reply.id}`);
+                CancelButton.setLabel("Delete")
+                    .setCustomId(`point_delete/${Reply.id}`)
+                    .setStyle("DANGER");
+                
+                const Channel = await Bot.Client.channels.resolve(Bot.Configuration.commands.import_requests_channel_id);
+
+                if (!Channel) {
+                    throw new Error(`Channel ${Bot.Configuration.commands.import_requests_channel_id} does not exist or could not be found.`);
+                } else {
+                    await Channel.send({
+                        embeds: [AttendanceEmbed],
+                        components: [new MessageActionRow().setComponents(ConfirmButton, CancelButton)]
+                    })
+    
+                    try {
+                        await TempMessage.delete()
+                    } catch (error) {}
+        
+                    AttendanceEmbed.setDescription("Attendance data has been imported.")
+                    AttendanceEmbed.setColor("GREEN");
+                    
+                    await Interaction.editReply({
+                        embeds: [AttendanceEmbed]
+                    })
+                }
+            } catch (error) {
+                AttendanceEmbed.setColor("RED");
+                AttendanceEmbed.setDescription(`Attendance data failed to import. Error: ${error}`)
+
+                await Interaction.editReply({
+                    embeds: [AttendanceEmbed]
+                })
+            }
+
+           
         }
 
         const Reply = await Interaction.editReply({
@@ -99,6 +184,9 @@ module.exports = {
             switch (ButtonInteraction.customId) {
                 case "submit":
                     sendImport();
+
+                    MessageCollector.stop("SUBMITTED");
+                    InteractionCollector.stop("SUBMITTED");
 
                     break;
                 case "coauthor":
@@ -193,7 +281,7 @@ module.exports = {
                 const PointValue = parseInt(ImportComponents[0])
                 const Users = ImportComponents[1]
 
-                if (!PointValue) {
+                if (typeof(PointValue) != "number") {
                     ImportReply = await message.reply({
                         embeds: [
                             new MessageEmbed()
@@ -222,20 +310,24 @@ module.exports = {
                         ImportData[PointValue.toString()] = []
                     }
                     
-                    const PointArray = ImportData[PointValue.toString()]
-                    for (const UserId in Array.from(Mentions.keys())) {
-                        console.oldLog(UserId);
-                        if (PointArray.includes(UserId)) {
-                            const Index = PointArray.indexOf(UserId);
-                            PointArray.splice(Index, 1);
-                        } else {
-                            PointArray.push(UserId);
+                    const Keys = Array.from(Mentions.keys())
+
+                    for (const Key in Keys) {
+                        const UserId = Keys[Key];
+
+                        for (const Index in ImportData) {
+                            const PointTable = ImportData[Index];
+                            if (Index != PointValue && PointTable.includes(UserId)) {
+                                const UserIndex = PointTable.indexOf(UserId);
+
+                                PointTable.splice(UserIndex, 1);
+                            }  else if (Index == PointValue) {
+                                PointTable.push(UserId)
+                            }
                         }
                     }
 
                     renderAttendanceEmbed();
-                    
-                    
                 }
 
                 setTimeout(() => {
@@ -259,8 +351,6 @@ module.exports = {
                     ],
                     components: []
                 })
-            } else if (!Imported) {
-                return sendImport()
             }
         })
     }

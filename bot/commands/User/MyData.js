@@ -7,17 +7,16 @@ module.exports = {
 
   cooldown: 30,
 
-  execute: async function (RaidManager, Interaction) {
-    const Database = RaidManager.Database;
+  execute: async function (Bot, Interaction) {
+    const Database = Bot.database;
 
     const Member = Interaction.member;
-    const User = await Database.GetUser(Member.id);
+    const User = await Database.getUser(Member.id);
 
     const DataEmbed = new MessageEmbed()
       .setTitle("TQI Userdata")
       .setDescription(`Fetching userdata for <@${Member.id}>.`)
       .setColor("ORANGE")
-      .setFooter(await RaidManager.EmbedFooter(RaidManager));
 
     await Interaction.reply({
       embeds: [DataEmbed],
@@ -37,11 +36,25 @@ module.exports = {
 
       DataEmbed.setDescription(`Userdata for <@${Member.id}>.`);
       DataEmbed.setColor("GREEN");
-      DataEmbed.addField("Events Attended", EventsAttended, true);
-      DataEmbed.addField("Squadron", Squadron, true);
-      DataEmbed.addField("TQI Rank", Rank, true);
-
-      return Interaction.editReply({
+      DataEmbed.addFields([
+        {
+          name: "Events Attended",
+          value: EventsAttended,
+          inline: true
+        },
+        {
+          name: "Squadron",
+          value: Squadron,
+          inline: true
+        },
+        {
+          name: "TQI Rank",
+          value: Rank,
+          inline: true
+        }
+      ])
+      
+      return await Interaction.editReply({
         embeds: [DataEmbed],
       });
     } else {
@@ -50,7 +63,7 @@ module.exports = {
       );
       DataEmbed.setColor("RED");
 
-      return Interaction.editReply({
+      return await Interaction.editReply({
         embeds: [DataEmbed],
       });
     }

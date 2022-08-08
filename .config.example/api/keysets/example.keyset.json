@@ -4,7 +4,7 @@
   "scopes": [
     "*",
     "GET_USER",
-    "SET_USER_POINTS",
+    "SET_USER_EVENTS",
     "SET_USER_SQUADRON",
     "SET_USER_VERIFICATION_ID",
     "SET_USER_DISCORD_ID",
