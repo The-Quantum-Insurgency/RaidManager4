@@ -91,7 +91,7 @@ const RaidManager = {
     try {
       await setCookie(Environment.roblox.roblosecurity, true)
     } catch (error) {
-      console.error(error);
+      console.log(error);
       console.error(`Error: cookie failed to set.`)
     }
 
