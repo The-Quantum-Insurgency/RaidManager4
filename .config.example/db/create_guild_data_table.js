@@ -3,6 +3,7 @@ exports.up = async function (connection) {
         \`id\` INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
         \`guild_id\` MEDIUMTEXT NOT NULL,
         \`bind_data\` LONGTEXT NOT NULL DEFAULT '{"default_roles": [], "role_binds": [], "gamepass_binds": []}',
+        \`pending_imports\` LONGTEXT NOT NULL DEFAULT '{}',
         \`audit_logs\` LONGTEXT NOT NULL DEFAULT '{"channel_id": 0, "hooks": [], "logs": []}'
     );`)
 };

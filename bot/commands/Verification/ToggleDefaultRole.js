@@ -1,4 +1,5 @@
 const { SlashCommandRoleOption } = require("@discordjs/builders")
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     name: "toggledefaultrole",
@@ -8,6 +9,7 @@ module.exports = {
         new SlashCommandRoleOption()
             .setName("role")
             .setDescription("The role to mark as a default role")
+            .setRequired(true)
     ],
 
     permssions: ["NODE:ADMINISTRATOR"],
@@ -30,7 +32,7 @@ module.exports = {
         if (RoleData) {
             RoleData.isDefault = !RoleData.isDefault;
         } else {
-            RoleData[RoleId] = {
+            BindData[RoleId] = {
                 binds: [],
                 isDefault: true
             }

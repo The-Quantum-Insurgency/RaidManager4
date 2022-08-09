@@ -9,6 +9,7 @@ const FileSystem = require("fs/promises");
 
 module.exports = async function (Bot) {
   const Client = Bot.Client;
+  const Database = Bot.database;
   const placeholderParser = Bot.RaidManager.placeholderParser;
 
   // Check for raidmanager tempfile
@@ -38,6 +39,21 @@ module.exports = async function (Bot) {
       console.error(
         "This is an error relating to the usage of the /reboot command. The `raidmanager.temp` file may not have been deleted. Please ensure the file is removed and try again."
       );
+    }
+  }
+
+  // Create guildData for non-cached guilds
+  const GuildCache = Client.guilds.cache;
+  for (const GuildId of Array.from(GuildCache.keys())) {
+    try {
+      const GuildData = await Database.getGuild(GuildId);
+
+      if (!GuildData) {
+        await Database.setGuild(GuildId);
+      }
+    } catch (error) {
+      console.error(error);
+      console.error(`Error fetching / creating guildData for guild ${GuildId}`);
     }
   }
 
