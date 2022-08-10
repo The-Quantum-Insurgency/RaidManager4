@@ -8,6 +8,7 @@ enable_slash_commands = true
 slash_command_guilds = []
 import_requests_channel_id = "1002610487378321520"
 allow_developer_bypass = true
+developers = []
 
 [files]
 status_message_file = "status.json"
