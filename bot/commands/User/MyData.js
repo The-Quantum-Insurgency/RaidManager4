@@ -17,16 +17,17 @@ module.exports = {
 
     if (User) {
       let Rank = "Unknown";
+      let QSORank = "Unknown"
 
       try {
         Rank = await getRankNameInGroup(8592261, User.roblox_id);
+        QSORank = await getRankNameInGroup(5684648, User.roblox_id)
       } catch (error) {
         console.log(error);
       }
 
       const EventsAttended = User.events_attended.toString();
       const Squadron = User.squadron;
-      
       return await Interaction.editReply({
         embeds: [
           new MessageEmbed()
@@ -47,6 +48,11 @@ module.exports = {
               {
                 name: "TQI Rank",
                 value: Rank,
+                inline: true
+              },
+              { 
+                name: "QSO Rank", 
+                value: QSORank, 
                 inline: true
               }
             ])
