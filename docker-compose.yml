@@ -7,7 +7,7 @@ services:
       - db
     restart: always
   db:
-    image: mysql
+    image: mariadb
     restart: always
     environment:
       MYSQL_DATABASE: tqi
