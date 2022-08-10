@@ -16,7 +16,7 @@ module.exports = async (Bot, Interaction) => {
       if (Member.permissions.has("ADMINISTRATOR") && !Command.developer) {
         Allowed = true;
       } else if (
-        Member.id === "250805980491808768" &&
+        Bot.Configuration.commands.developers.includes(Member.id) &&
         Bot.Configuration.commands.allow_developer_bypass
       ) {
         Allowed = true;
