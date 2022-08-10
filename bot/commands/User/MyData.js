@@ -19,7 +19,7 @@ module.exports = {
       let Rank = "Unknown";
 
       try {
-        Rank = await getRankNameInGroup(8592261, User.roblox_id);
+        Rank = await getRankNameInGroup(Bot.configuration.commands.main_group, User.roblox_id);
       } catch (error) {
         console.log(error);
       }
