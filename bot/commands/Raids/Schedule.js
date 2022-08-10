@@ -29,6 +29,23 @@ module.exports = {
         const Guild = Interaction.guild;
         const Member = Interaction.member;
 
-        
+        let Rejected = false;
+        const Event = {
+            host_id: Member.user.id,
+            type: null,
+            length: null,
+            date: null,
+            notes: null
+        }
+
+        const SchedulerActionRow = new MessageActionRow();
+        const CancelButton = new MessageButton()
+            .setCustomId("cancel")
+            .setLabel("Cancel")
+            .setStyle("DANGER")
+
+        const SchedulerEmbed = new MessageEmbed()
+            .setTitle("RaidManager Event Scheduler")
+            
     }
 }
