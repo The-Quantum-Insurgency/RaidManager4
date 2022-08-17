@@ -24,4 +24,8 @@ module.exports = async function (Bot, Interaction) {
   if (Interaction.isButton() && Interaction.customId.includes("point_")) {
     Bot.importInteractionHandle(Bot, Interaction);
   }
+
+  if (Interaction.isButton() && Interaction.customId.includes("pingtoggle/")) {
+    Bot.pingToggleInteractionHandle(Bot, Interaction);
+  }
 };

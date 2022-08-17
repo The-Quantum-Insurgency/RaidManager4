@@ -1,18 +1,26 @@
 const { MessageEmbed } = require("discord.js");
+const { SlashCommandUserOption } = require("@discordjs/builders")
 const { getRankNameInGroup } = require("noblox.js");
 
 module.exports = {
-  name: "mydata",
-  description: "Lets verified guild members view their userdata.",
+  name: "getdata",
+  description: "Lets guild administrators fest verified user's data.",
 
-  cooldown: 30,
+  options: [
+    new SlashCommandUserOption()
+      .setName("user")
+      .setDescription("The user to fetch data from.")
+      .setRequired(true)
+  ],
 
   execute: async function (Bot, Interaction) {
     await Interaction.deferReply();
 
     const Database = Bot.database;
+    const Guild = Interaction.guild;
+    const UserId = Interaction.options.getUser("user").id;
 
-    const Member = Interaction.member;
+    const Member = await Guild.members.resolve(UserId);
     const User = await Database.getUser(Member.id);
 
     if (User) {

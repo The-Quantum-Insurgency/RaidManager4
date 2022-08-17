@@ -6,10 +6,12 @@ token = ""
 [commands]
 enable_slash_commands = true
 slash_command_guilds = []
-import_requests_channel_id = "1002610487378321520"
+import_requests_channel_id = ""
+import_requests_approval_roles = []
 allow_developer_bypass = true
-main_group = 8592261
+main_group = 0
 developers = []
+ping_role_map = {raid = "", training = ""}
 
 
 [files]
