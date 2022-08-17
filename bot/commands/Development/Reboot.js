@@ -80,33 +80,33 @@ module.exports = {
           components: [],
         });
 
-        const Configuration = RaidManager.Configuration;
-        const ShutdownData = Configuration.shutdown_data;
+        // const Configuration = RaidManager.Configuration;
+        // const ShutdownData = Configuration.shutdown_data;
 
-        ShutdownData.guild_id = Guild.id;
-        ShutdownData.channel_id = Channel.id;
-        ShutdownData.message_id = Reply.id;
+        // ShutdownData.guild_id = Guild.id;
+        // ShutdownData.channel_id = Channel.id;
+        // ShutdownData.message_id = Reply.id;
 
-        const ConfigString = JSON.stringify(Configuration, null, 4);
+        // const ConfigString = JSON.stringify(Configuration, null, 4);
 
-        try {
-          await FileSystem.writeFile(
-            "Configuration/Bot/config.json",
-            ConfigString
-          );
-        } catch (error) {
-          ConfirmationEmbed.setColor("RED")
-            .setDescription(
-              "config.json could NOT be written to. Reboot cancelled. See bot logs for more details."
-            )
-            .setFooter("");
+        // try {
+        //   await FileSystem.writeFile(
+        //     "Configuration/Bot/config.json",
+        //     ConfigString
+        //   );
+        // } catch (error) {
+        //   ConfirmationEmbed.setColor("RED")
+        //     .setDescription(
+        //       "config.json could NOT be written to. Reboot cancelled. See bot logs for more details."
+        //     )
+        //     .setFooter("");
 
-          return Interaction.editReply({
-            embeds: [ConfirmationEmbed],
-          });
-        }
+        //   return Interaction.editReply({
+        //     embeds: [ConfirmationEmbed],
+        //   });
+        // }
 
-        process.exit(2);
+        // process.exit(2);
       }
     });
 

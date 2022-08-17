@@ -1,4 +1,3 @@
-const { SlashCommandStringOption, SlashCommandRoleOption, SlashCommandBooleanOption } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
@@ -33,7 +32,7 @@ module.exports = {
             for (const Index in Binds) {
                 const Bind = Binds[Index];
 
-                BindString = BindString + ` - \`${Bind.type}:${Bind.data}\`; isDefault: \`${IsDefault}\`\n`
+                BindString = BindString + ` - \`${Bind.type}:${Bind.data}\`; isDefault: \`${IsDefault}\``
             }
 
             BindStrings.push(BindString);
@@ -41,7 +40,7 @@ module.exports = {
 
         const BindEmbed = new MessageEmbed()
             .setTitle(`${Guild.name} Role Bindings`)
-            .setDescription(`List of all rolebinds for ${Guild.name}:\n${BindStrings}`)
+            .setDescription(`List of all rolebinds for ${Guild.name}:\n${BindStrings.join(",\n")}`)
             .setColor("ORANGE")
 
         return await Interaction.editReply({

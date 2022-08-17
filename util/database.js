@@ -129,8 +129,8 @@ const Database = class Database {
       ) VALUES(?, ?, ?, ?)`, [
         guildId,
 
-        dataTable.bind_data || '[]',
-        dataTable.pending_imports || '[]',
+        dataTable.bind_data || '{}',
+        dataTable.pending_imports || '{}',
         dataTable.audit_logs || '{"channel_id": 0, "hooks": [], "logs": []}'
       ])
 
