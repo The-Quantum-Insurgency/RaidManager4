@@ -72,6 +72,10 @@ module.exports = {
                     })
                 } catch (error) {}
             }
+
+            await new Promise((resolve) => {
+                setTimeout(resolve, 2_000);
+            })
         }
 
         await Interaction.editReply({
