@@ -21,7 +21,7 @@ module.exports = {
       )
       .setColor("ORANGE")
       .setFooter(
-        await RaidManager.EmbedFooter(
+        await RaidManager.embedFooter(
           RaidManager,
           "Prompt will time out in 15 seconds."
         )

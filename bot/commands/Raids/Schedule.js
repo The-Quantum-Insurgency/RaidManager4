@@ -13,7 +13,7 @@ const EventThumbnailMap = {
 }
 
 module.exports = {
-    name: "import",
+    name: "schedule",
     description: "Allows insurgents+ and Sr. Training Advisors to schedule events for the group.",
 
     permissions: ["ROLE:857447098709704736", "NODE:ADMINISTRATOR", "ROLE:966594489777016863"],
