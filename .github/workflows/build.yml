@@ -34,7 +34,7 @@ jobs:
       with:
         path: raidmanager
         key: ${{ runner.os }}-raidmanager4
-    - run: "npm install"
+    - run: "npm ci"
     - run: cp -r .config.example .config
     - run: "node raidmanager db:init --skip-update"
     - run: "node raidmanager start --debug --skip-update"
