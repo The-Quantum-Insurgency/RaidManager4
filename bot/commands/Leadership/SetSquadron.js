@@ -49,7 +49,7 @@ module.exports = {
       await Interaction.editReply({
         embeds: [
           new MessageEmbed()
-            .setDescription(`Error setting squadron for <@${UserId}>. ${error}`)
+            .setDescription(`Error setting squadron for <@${UserId}>. \`${error}\``)
             .setColor("RED")
         ]
       })

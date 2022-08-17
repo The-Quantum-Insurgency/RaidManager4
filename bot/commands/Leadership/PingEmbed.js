@@ -53,7 +53,7 @@ module.exports = {
       await Interaction.editReply({
         embeds: [
           new MessageEmbed()
-            .setDescription(`Error sending embed. ${error}`)
+            .setDescription(`Error sending embed. \`${error}\``)
             .setColor("RED")
         ],
 

@@ -125,6 +125,9 @@ module.exports = async (Bot, Interaction) => {
       content:
         "An internal error has occurred, and the command could not be executed.",
       ephemeral: true,
+
+      embeds: [],
+      components: []
     });
   }
 };
