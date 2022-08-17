@@ -18,6 +18,7 @@ module.exports = {
                 { name: "group", value: "group" },
                 { name: "gamepass", value: "gamepass" },
                 { name: "userid", value: "userid" },
+                { name: "none", value: "none" },
             )
             .setName("type")
             .setDescription("The type of asset to bind.")

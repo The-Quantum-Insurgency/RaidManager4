@@ -146,6 +146,8 @@ module.exports = async function(Bot, Guild, Member) {
                         }
 
                         break;
+                    case "none":
+                        continue;
                     default:
                         Errors.push(`Error applying role matching type ${Type}:${Data}. Invalid type.`)
                         break;
