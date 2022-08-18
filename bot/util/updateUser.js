@@ -11,6 +11,7 @@ module.exports = async function(Bot, Guild, Member) {
     const UserData = await Database.getUser(Member.id);
     const Errors = [];
     const Promises = [];
+    const RankCache = {};
 
     if (!UserData) {
         Errors.push(`No userdata was found for ${Member.id}.`)
@@ -63,12 +64,18 @@ module.exports = async function(Bot, Guild, Member) {
 
                         var GroupRank = 0;
 
-                        try {
-                            GroupRank = await getRankInGroup(GroupId, UserId);
-                        } catch (error) {
-                            Errors.push(`Error fetching GroupRank for ${UserId} in group ${GroupId} with data ${Data}. ${error}`)
+                        if (RankCache[GroupId]) {
+                            GroupRank = RankCache[GroupId];
+                        } else {
+                            try {
+                                GroupRank = await getRankInGroup(GroupId, UserId);
+                            } catch (error) {
+                                Errors.push(`Error fetching GroupRank for ${UserId} in group ${GroupId} with data ${Data}. ${error}`)
 
-                            break;
+                                break;
+                            }
+
+                            RankCache[GroupId] = GroupRank;
                         }
 
                         if (GroupRank >= MinRank && GroupRank <= MaxRank) {

@@ -54,7 +54,7 @@ module.exports = {
                 } catch (error) {}
             }
 
-            if (Index % 100 == 0) {
+            if (Index % 20 == 0) {
                 try {
                     await Interaction.editReply({
                         embeds: [
@@ -74,7 +74,7 @@ module.exports = {
             }
 
             await new Promise((resolve) => {
-                setTimeout(resolve, 2_000);
+                setTimeout(resolve, 5_000);
             })
         }
 
