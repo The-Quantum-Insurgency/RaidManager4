@@ -1,5 +1,13 @@
 # RaidManager REST API Configuration
 
+[api]
+bind_port = 3000
+
+[whitelist]
+enabled = false
+user_agents = []
+ips = []
+
 [blacklist]
 user_agents = []
 ips = []
