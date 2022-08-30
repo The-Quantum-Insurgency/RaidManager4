@@ -236,7 +236,7 @@ module.exports = {
                             .addFields([
                                 {
                                     name: "Username",
-                                    value: PlayerInfo.username,
+                                    value: PlayerInfo.username || 'Unknown',
                                     inline: true
                                 },
                                 {
@@ -245,8 +245,8 @@ module.exports = {
                                     inline: true
                                 },
                                 {
-                                    name: "Bio",
-                                    value: PlayerInfo.blurb,
+                                    name: "Bio (Blurb)",
+                                    value: PlayerInfo.blurb || '--Empty--',
                                     inline: false
                                 }
                             ])

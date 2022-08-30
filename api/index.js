@@ -6,6 +6,7 @@
  */
 
 const FileSystem = require("fs");
+const Server = require("express")();
 
 module.exports = class API {
   constructor(RaidManager) {
@@ -60,9 +61,22 @@ module.exports = class API {
     return Middleware;
   };
 
+  ParseRouteFolder = async (Folder) => {
+    const Routes = [];
+
+    return Routes;
+  };
+
   GetRoutes = async () => {
     console.debug("Parsing routes...");
     const Routes = [];
+
+    const RequestTypes = FileSystem.readdirSync("./api/routes");
+    for (const File of RequestTypes) {
+      var RequestPath = "";
+
+    }
+    /*
     const RouteFiles = FileSystem.readdirSync("./api/routes");
     for (const Index in RouteFiles) {
       const FileName = RouteFiles[Index];
@@ -76,6 +90,7 @@ module.exports = class API {
         );
       }
     }
+    */
 
     return Routes;
   };
@@ -105,6 +120,13 @@ module.exports = class API {
 
     console.debug("API routes loaded!");
     this.Routes = Routes;
+
+    Server.get("/", async (Request, Response) => {
+      return Response.json({success: true, message: "RaidManager4 REST API online and ready."});
+    });
+
+    console.debug("Start express");
+    Server.listen(this.Configuration.api.bind_port);
 
     console.log("RaidManager API successfully started!");
     console.debug("========== END API LOAD OUTPUT ==========");

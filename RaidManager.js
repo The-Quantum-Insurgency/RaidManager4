@@ -52,7 +52,7 @@ const RaidManager = {
     console.warn = Logger.warn;
 
     console.oldError = console.error;
-    console.error = Logger.error;
+//    console.error = Logger.error;
 
     console.oldDebug = console.debug;
     console.debug = Logger.debug;
