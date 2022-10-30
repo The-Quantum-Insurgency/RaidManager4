@@ -23,7 +23,7 @@
     "chalk": "4",
     "discord-api-types": "^0.37.2",
     "discord.js": "^13.10.3",
-    "express": "^4.17.3",
+    "express": "^4.18.2",
     "moment": "^2.29.3",
     "mysql2": "^2.3.3",
     "noblox.js": "^4.13.1",
