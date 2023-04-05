@@ -26,7 +26,7 @@
     "express": "^4.17.3",
     "moment": "^2.29.3",
     "mysql2": "^2.3.3",
-    "noblox.js": "^4.13.1",
+    "noblox.js": "^4.14.0",
     "readline-sync": "^1.4.10",
     "toml": "^3.0.0",
     "uuid": "^8.3.2"
