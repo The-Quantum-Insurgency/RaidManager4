@@ -1,4 +1,4 @@
-FROM node:current-buster-slim
+FROM node:20.11.0-buster-slim
 
 
 # Create app directory
