@@ -20,6 +20,10 @@
 **NOTE: THIS IS A MOSTLY PROPRIETARY SOLUTION CODED UNIQUELY TO FIT TQI'S NEEDS. THIS IS NOT THE "BE ALL AND END ALL" FOR MOST CASES! The bot is open to modify however you want, but it is preferred if the source is credited, so other people can find this repository.**
 
 ---
+## Deprecation notice
+This application has been deprecated in favor of [RaidManager5](https://github.com/imskyyc/RaidManager5). This repository will no longer be recieving security updates.
+
+---
 
 The RaidManager is [TQI's](https://www.roblox.com/groups/8592261/The-Quantum-Insurgency#!/about) made-in-house (I don't like using the word proprietary) solution for Discord Management, Event Scheduling, and userdata storage.
 
